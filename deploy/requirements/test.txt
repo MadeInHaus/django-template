@@ -1,0 +1,12 @@
+#--- Python requirements to be included for TESTING ONLY
+#    NOTE: to avoid conflicts, every requirement should include the version
+
+#--- Behavior-driven development
+lettuce           == 0.1.33 # for Behavior Driven Development
+nose              == 1.1.2  # required by lettuce
+selenium          == 2.6.0  # required by lettuce
+adminlettuce      == 0.0.6  # to generate documentation from lettuce features
+random_instances  == 0.0.3  # to retrieve or get random instances while testing
+radish            == 0.1.10 # additional configuration and steps for lettuce
+
+coverage

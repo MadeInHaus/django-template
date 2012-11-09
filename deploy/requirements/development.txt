@@ -1,0 +1,6 @@
+#--- Python requirements to be included in DEVELOPMENT ONLY
+
+#--- Administration
+docutils          == 0.8.1
+django-extensions
+Werkzeug

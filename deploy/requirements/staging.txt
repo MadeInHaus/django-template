@@ -1,0 +1,2 @@
+#--- Python requirements to be included in STAGING ONLY
+#    NOTE: to avoid conflicts, every requirement should include the version
