@@ -1,6 +1,8 @@
 import os.path
 import sys
 
+import dj_database_url
+
 # Include apps on the path
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../'))
@@ -10,10 +12,7 @@ sys.path.insert(0, os.path.join(PROJECT_ROOT, "apps"))
 ADMINS = (('__PROJECT_NAME__ administrator', '__ADMIN_EMAIL__'),)
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(PROJECT_ROOT, 'dev.db'),
-    }
+    'default': dj_database_url.config(default='postgres://localhost'),
 }
 
 # Never deploy a site into production with DEBUG turned on!
@@ -41,6 +40,7 @@ FIXTURE_DIRS = ()
 # A tuple of strings designating all the enabled applications
 INSTALLED_APPS = (
     'grappelli',
+    
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.auth',
@@ -48,19 +48,20 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'django.contrib.messages',
     'django.contrib.sessions',
-    'django.contrib.sites',
     'django.contrib.staticfiles',
-    'ff0000', # load django-admin commands, initial fixtures, ..
-    'js_routing',
+
+    'require',
+    'debug-toolbar',
+    'tastypie',
+    
 )
 
 # A tuple of IP addresses that see debug comments, when DEBUG is True
 INTERNAL_IPS = ('0.0.0.0', '127.0.0.1',)
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_SSL_PROXY', 'true')
-
-# Number of items to show in a RSS Feed
-ITEMS_PER_FEED = 5
+#Secure proxy setting 
+# https://docs.djangoproject.com/en/dev/ref/settings/#secure-proxy-ssl-header
+#SECURE_PROXY_SSL_HEADER = ('HTTP_X_SSL_PROXY', 'true')
 
 # The language code for this installation
 LANGUAGE_CODE = 'en-us'
@@ -81,13 +82,24 @@ MEDIA_URL = '/uploads/'
 
 # A tuple of middleware classes to use
 MIDDLEWARE_CLASSES = (
+    # Site Optimization Middleware
+    'django.middleware.gzip.GZipMiddleware',
+    'django.middleware.http.ConditionalGetMiddleware',
+
+    # Common Middleware
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'ff0000.middleware.XUACompatibleMiddleware'
+    
+    # Debug
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    
 )
+
+
+APPEND_SLASH = True
 
 # Number of digits grouped together on the integer part of a number
 NUMBER_GROUPING = 3
@@ -110,6 +122,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'collected-static')
 # URL to use when referring to static files located in STATIC_ROOT
 STATIC_URL = '/static/'
 
+# see django-require if S3 is required https://github.com/etianen/django-require
+STATICFILES_STORAGE = 'require.storage.OptimizedStaticFilesStorage'
+
 # Additional locations the staticfiles app will traverse
 DEV_STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 STATICFILES_DIRS = (DEV_STATIC_ROOT,)
@@ -125,9 +140,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.static',
     'django.contrib.messages.context_processors.messages',
     'django.core.context_processors.request',
+    
     'ff0000.context_processors.settings',
-    'js_routing.context.js_config',
-    'js_routing.context.base_template',
 )
 
 # Display a detailed report for any TemplateSyntaxError.
@@ -145,7 +159,7 @@ TEMPLATE_LOADERS = (
 )
 
 # The time zone for this installation
-TIME_ZONE = 'America/Los_Angeles'
+TIME_ZONE = None  #'America/Los_Angeles'
 
 # Output the "Etag" header. This saves bandwidth but slows down performance
 USE_ETAGS = False
@@ -172,3 +186,52 @@ VIEW_SETTINGS = (
 )
 
 LOG_FILENAME = None
+
+
+# Django Require settings
+
+# The baseUrl to pass to the r.js optimizer.
+REQUIRE_BASE_URL = "javascripts"
+
+# The name of a build profile to use for your project, relative to REQUIRE_BASE_URL.
+# A sensible value would be 'app.build.js'. Leave blank to use the built-in default build profile.
+REQUIRE_BUILD_PROFILE = None
+
+# The name of the require.js script used by your project, relative to REQUIRE_BASE_URL.
+REQUIRE_JS = "require.js"
+
+# A dictionary of standalone modules to build with almond.js.
+# See the section on Standalone Modules, below.
+REQUIRE_STANDALONE_MODULES = {}
+
+# Whether to run django-require in debug mode.
+REQUIRE_DEBUG = DEBUG
+
+# A tuple of files to exclude from the compilation result of r.js.
+REQUIRE_EXCLUDE = ("build.txt",) 
+
+
+# Debug toolbar settings
+DEBUG_TOOLBAR_PANELS = (
+    'debug_toolbar.panels.version.VersionDebugPanel',
+    'debug_toolbar.panels.timer.TimerDebugPanel',
+    'debug_toolbar.panels.settings_vars.SettingsVarsDebugPanel',
+    'debug_toolbar.panels.headers.HeaderDebugPanel',
+    'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
+    'debug_toolbar.panels.template.TemplateDebugPanel',
+    'debug_toolbar.panels.sql.SQLDebugPanel',
+    'debug_toolbar.panels.signals.SignalDebugPanel',
+    'debug_toolbar.panels.logger.LoggingPanel',
+)
+
+def custom_show_toolbar(request):
+    return True  # Always show toolbar, for example purposes only.
+
+DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': False,
+    'SHOW_TOOLBAR_CALLBACK': custom_show_toolbar,
+    'EXTRA_SIGNALS': ['myproject.signals.MySignal'],
+    'HIDE_DJANGO_SQL': False,
+    'TAG': 'div',
+    'ENABLE_STACKTRACES' : True,
+}
