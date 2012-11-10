@@ -10,13 +10,17 @@ class app::postgresql{
         require    => Package['postgresql']
     }
 
-    exec{"create db":
-    	require => Package['postgresql'],
-    	command => "createdb django",
-    	user => postgres
-
+    exec{"createpguser":
+        require => Package['postgresql'],
+        command => "sudo -u postgres createuser --superuser vagrant",
+        user => root,
     }
-    #TODO
-    # execute 'createuser vagrant'
 
+    exec{"createpgdb":
+    	require => Exec['createpguser'],
+    	command => "createdb django",
+    	user => postgres,
+    }
+#sudo -u postgres createdb django
+    
 }
