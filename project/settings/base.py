@@ -11,10 +11,19 @@ sys.path.insert(0, os.path.join(PROJECT_ROOT, "apps"))
 # People who get code error notifications when DEBUG=False
 ADMINS = (('__PROJECT_NAME__ administrator', '__ADMIN_EMAIL__'),)
 
+# DATABASES = {
+#     'default': dj_database_url.config(default='postgres://localhost'),
+# }
 DATABASES = {
-    'default': dj_database_url.config(default='postgres://localhost'),
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'django',            # Or path to database file if using sqlite3.
+        'USER': 'postgres',                      # Not used with sqlite3.
+        'PASSWORD': 'postgres',                  # Not used with sqlite3.
+        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+    }
 }
-
 # Never deploy a site into production with DEBUG turned on!
 DEBUG = True
 
@@ -51,7 +60,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'require',
-    'debug-toolbar',
+    #'debug-toolbar',
     'tastypie',
     
 )
@@ -94,7 +103,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     
     # Debug
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    #'debug_toolbar.middleware.DebugToolbarMiddleware',
     
 )
 
@@ -141,7 +150,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.messages.context_processors.messages',
     'django.core.context_processors.request',
     
-    'ff0000.context_processors.settings',
 )
 
 # Display a detailed report for any TemplateSyntaxError.
@@ -230,7 +238,7 @@ def custom_show_toolbar(request):
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
     'SHOW_TOOLBAR_CALLBACK': custom_show_toolbar,
-    'EXTRA_SIGNALS': ['myproject.signals.MySignal'],
+    'EXTRA_SIGNALS': [],
     'HIDE_DJANGO_SQL': False,
     'TAG': 'div',
     'ENABLE_STACKTRACES' : True,

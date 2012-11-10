@@ -15,7 +15,6 @@ django-grappelli==2.4.3
 django-require==1.0.0
 django-tastypie==0.9.11
 docutils==0.9.1
-git-remote-helpers==0.1.0
 gunicorn==0.15.0
 ipython==0.13.1
 kombu==2.4.8

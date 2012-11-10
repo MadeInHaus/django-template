@@ -10,5 +10,7 @@ node default{
     include app::python
     include app::vim
     include app::git
+    include app::postgresql
+    include app::pipreq
 }
 

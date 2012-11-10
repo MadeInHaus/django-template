@@ -8,7 +8,7 @@ Vagrant::Config.run do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "precise32"
+  config.vm.box = "precise64"
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
@@ -35,10 +35,13 @@ Vagrant::Config.run do |config|
   #config.vm.forward_port 443, 443
 
   #Redis
-  config.vm.forward_port 6379, 6378
+  #config.vm.forward_port 6379, 6378
 
   #RabbitMQ
-  config.vm.forward_port 5672, 5673
+  #config.vm.forward_port 5672, 5673
+
+  #Django
+  config.vm.forward_port 8000, 8080
 
   # Share an additional folder to the guest VM. The first argument is
   # an identifier, the second is the path on the guest to mount the
