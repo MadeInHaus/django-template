@@ -13,7 +13,7 @@ urlpatterns = patterns('',
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^admin/', include(admin.site.urls)),
     # Homepage
-    (r'^$', TemplateView.as_view(template_name='home.html')),
+    #(r'^$', TemplateView.as_view(template_name='home.html')),
 )
 
 # Static files only get served by django in DEBUG mode
