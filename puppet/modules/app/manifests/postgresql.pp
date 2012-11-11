@@ -21,6 +21,4 @@ class app::postgresql{
     	command => "createdb django",
     	user => postgres,
     }
-#sudo -u postgres createdb django
-    
 }
