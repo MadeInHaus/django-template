@@ -27,7 +27,7 @@ elif os.path.isfile(os.path.join(_path, '%s.py' % _hostname)):
 sys.path.remove(_path)
 
 # Any other configuration that should apply to all
-# settings versions but relies on other settings (ei: debug)
+# settings versions but relies on other settings (ie: debug)
 # should go here.
 LOGGING = {
     'version': 1,
