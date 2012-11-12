@@ -10,7 +10,7 @@ sys.path.insert(0, _path)
 from socket import gethostname
 _hostname = gethostname().split('.')[0]
 
-_overide_var = '__PROJECT_NAME__' + '_OVERRIDE'
+_overide_var = 'APP_ENV'
 _overide_var = _overide_var.replace(' ', '_').upper()
 
 if os.environ.get(_overide_var):

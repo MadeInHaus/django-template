@@ -10,6 +10,5 @@ dist
 .coverage
 MANIFEST
 .idea
-test-project
 .vagrant
 
