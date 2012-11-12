@@ -10,6 +10,7 @@ env.passwords      = {
 @task
 @roles('vagrant')
 def runserver():
+	run("ps ax | grep [p]ython | awk '{ print $1 }' | xargs kill -9")
 	with cd("/var/www/project"):
 		run('python ./manage.py runserver [::]:8000')
 
