@@ -1,7 +1,7 @@
 import os.path
 import sys
 
-import dj_database_url
+import djcelery
 
 # Include apps on the path
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
@@ -11,19 +11,23 @@ sys.path.insert(0, os.path.join(PROJECT_ROOT, "apps"))
 # People who get code error notifications when DEBUG=False
 ADMINS = (('__PROJECT_NAME__ administrator', '__ADMIN_EMAIL__'),)
 
-# DATABASES = {
-#     'default': dj_database_url.config(default='postgres://localhost'),
-# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'django',            # Or path to database file if using sqlite3.
-        'USER': 'vagrant',                      # Not used with sqlite3.
-        'PASSWORD': 'vagrant',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', 
+        'NAME': 'django',            
+        'USER': 'vagrant',                      
+        'PASSWORD': 'vagrant',                  
+        'HOST': '',                      
+        'PORT': '',                      
     }
 }
+
+# UNCOMMENT FOR CELERY
+# djcelery.setup_loader()
+# CELERY_RESULT_BACKEND = 'amqp'
+# CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
+
 # Never deploy a site into production with DEBUG turned on!
 DEBUG = True
 
@@ -63,6 +67,7 @@ INSTALLED_APPS = (
     #'debug-toolbar',
     'gunicorn',
     'tastypie',
+    #'djcelery',
     
 )
 
