@@ -1,6 +1,5 @@
 .DS_Store
 *.pyc
-django_start.egg-info
 build
 dist
 .DS_Store
@@ -9,7 +8,6 @@ dist
 .pydevproject
 .settings
 .coverage
-red_start.egg-info
 MANIFEST
 .idea
 test-project

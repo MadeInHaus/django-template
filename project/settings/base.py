@@ -61,6 +61,7 @@ INSTALLED_APPS = (
 
     'require',
     #'debug-toolbar',
+    'gunicorn',
     'tastypie',
     
 )
