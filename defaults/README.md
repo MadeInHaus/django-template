@@ -1,7 +1,6 @@
 Welcome to the Django project __PROJECT_NAME__
 ================================================
 
-## Project URLs
 
 ## Team
 
@@ -13,6 +12,9 @@ Welcome to the Django project __PROJECT_NAME__
 
 ### Frontend
 
+
+
+## Project URLs
 
 
 ## Backend Information
