@@ -12,3 +12,4 @@ MANIFEST
 .idea
 .vagrant
 celerybeat.pid
+*.sw[op]
