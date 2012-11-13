@@ -19,8 +19,8 @@ def init_git():
 
 def get_replace_vars(no_prompt=False):
     defaults = {
-        'PROJECT_NAME' : 'Django Project',
-        'ADMIN_EMAIL' : 'cmsadmin@madeinhaus.com'
+        'PROJECT_NAME' : 'Haus Django Project',
+        'ADMIN_EMAIL' : 'cms-admin@madeinhaus.com'
     }
     replace = {}
 
