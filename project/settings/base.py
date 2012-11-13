@@ -31,6 +31,14 @@ CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
 # REDIS SETTINGS
 REDIS_HOST = os.getenv('REDISTOGO_URL', 'redis://localhost:6379')
 
+# CACHING
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
+
 # Never deploy a site into production with DEBUG turned on!
 DEBUG = True
 

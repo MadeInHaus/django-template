@@ -14,11 +14,13 @@ class app::postgresql{
         require => Package['postgresql'],
         command => "sudo -u postgres createuser --superuser vagrant",
         user => root,
+        refreshonly => true,
     }
 
     exec{"createpgdb":
     	require => Exec['createpguser'],
     	command => "createdb django",
     	user => postgres,
+        refreshonly => true,
     }
 }

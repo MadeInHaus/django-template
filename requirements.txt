@@ -26,6 +26,7 @@ psycopg2==2.4.5
 pycrypto==2.6
 pylint==0.26.0
 python-dateutil==1.5
+python-memcached==1.48
 pytz==2012h
 requests==0.14.2
 redis==2.6.2

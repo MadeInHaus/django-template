@@ -12,5 +12,6 @@ node default{
     include app::git
     include app::postgresql
     include app::pipreq
+    include app::memcache
 }
 
