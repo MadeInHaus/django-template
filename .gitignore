@@ -11,4 +11,4 @@ dist
 MANIFEST
 .idea
 .vagrant
-
+celerybeat.pid

@@ -23,10 +23,13 @@ DATABASES = {
     }
 }
 
-# UNCOMMENT FOR CELERY
-# djcelery.setup_loader()
-# CELERY_RESULT_BACKEND = 'amqp'
-# CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
+# CELERY SETTINGS
+djcelery.setup_loader()
+CELERY_RESULT_BACKEND = 'amqp'
+CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
+
+# REDIS SETTINGS
+REDIS_HOST = os.getenv('REDISTOGO_URL', 'redis://localhost:6379')
 
 # Never deploy a site into production with DEBUG turned on!
 DEBUG = True
@@ -67,7 +70,7 @@ INSTALLED_APPS = (
     #'debug-toolbar',
     'gunicorn',
     'tastypie',
-    #'djcelery',
+    'djcelery',
     
 )
 
