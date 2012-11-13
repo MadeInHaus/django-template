@@ -1,0 +1,41 @@
+Welcome to the Django project __PROJECT_NAME__
+================================================
+
+## Project URLs
+
+## Team
+
+### Production
+
+
+### Backend
+
+
+### Frontend
+
+
+
+## Backend Information
+
+### CMS
+
+Admin
+    Username: 
+    Password: 
+
+### Deployment notes
+
+See [DEPLOYMENT_NOTES.md](DEPLOYMENT_NOTES.md)
+
+### Local Dev
+
+See [GETTING_DJANGO_STARTED.md](GETTING_DJANGO_STARTED.md)
+
+
+## Important Credentials / Information
+
+Credential
+
+    Username: 
+    Password:
+
