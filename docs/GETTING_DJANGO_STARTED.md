@@ -14,6 +14,7 @@ install package
 
 ## Initialize and start server
 ```
+pip install fabric
 vagrant up
 fab syncdb
 fab runserver
