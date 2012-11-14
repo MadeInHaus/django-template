@@ -1,16 +1,23 @@
-Welcome to the Django project __PROJECT_NAME__
+Welcome to project __PROJECT_NAME__.
 ================================================
 
+## Description
 
 ## Team
 
 ### Production
 
 
-### Backend
+
+### Design
+
 
 
 ### Frontend
+
+
+
+### Backend
 
 
 
@@ -24,6 +31,8 @@ Welcome to the Django project __PROJECT_NAME__
 Admin
     Username: 
     Password: 
+
+### System Architecture Notes
 
 ### Deployment notes
 
