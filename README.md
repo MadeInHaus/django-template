@@ -1,6 +1,10 @@
-=djano-template
+#djano-template
 
-==Basic Django project
 
-==All web app files go in project
 
+Basic Django project
+---
+
+
+web app files go in project/
+----
