@@ -16,14 +16,3 @@ urlpatterns = patterns('',
     #(r'^$', TemplateView.as_view(template_name='home.html')),
 )
 
-# Static files only get served by django in DEBUG mode
-if settings.DEBUG:
-
-    # Add local directory to root
-    local_path = os.path.join(settings.DEV_STATIC_ROOT, 'local')
-    if os.path.exists(local_path):
-        for fname in os.listdir(local_path):
-            parts.append(url(r'^(?P<path>%s)' % fname,
-                'django.views.static.serve', {'document_root': local_path}))
-
-    urlpatterns += staticfiles_urlpatterns()
