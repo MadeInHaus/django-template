@@ -5,8 +5,14 @@ import djcelery
 
 # Include apps on the path
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
+
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../'))
-sys.path.insert(0, os.path.join(PROJECT_ROOT, "apps"))
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
+
+APPS_ROOT = os.path.join(PROJECT_ROOT, "apps")
+if APPS_ROOT not in sys.path:
+    sys.path.insert(0, APPS_ROOT)
 
 # People who get code error notifications when DEBUG=False
 ADMINS = (('__PROJECT_NAME__ administrator', '__ADMIN_EMAIL__'),)
