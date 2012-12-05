@@ -52,7 +52,7 @@ DEBUG = True
 DEFAULT_FROM_EMAIL = '__ADMIN_EMAIL__'
 
 # Set the subject prefix for email messages sent to admins and managers
-EMAIL_SUBJECT_PREFIX = '[__PROJECT_NAME__] '
+EMAIL_SUBJECT_PREFIX = '[__PROJECT_NAME__]'
 
 #DEFAULT_FROM_EMAIL = ''
 #EMAIL_HOST = ''
@@ -80,7 +80,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.staticfiles',
 
-    'require',
+    #'require',
     #'debug-toolbar',
     'gunicorn',
     'tastypie',
@@ -148,6 +148,7 @@ SET_MIMETYPE = True
 # The ID of the current site in the django_site database table
 SITE_ID = 1
 
+
 # Absolute path to the directory where collectstatic will collect static files
 STATIC_ROOT = os.path.join(BASE_DIR, 'collected-static')
 
@@ -155,7 +156,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'collected-static')
 STATIC_URL = '/static/'
 
 # see django-require if S3 is required https://github.com/etianen/django-require
-STATICFILES_STORAGE = 'require.storage.OptimizedStaticFilesStorage'
+#STATICFILES_STORAGE = 'require.storage.OptimizedStaticFilesStorage'
 
 # Additional locations the staticfiles app will traverse
 DEV_STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')

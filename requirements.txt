@@ -15,6 +15,8 @@ django-grappelli==2.4.3
 django-require==1.0.0
 django-tastypie==0.9.11
 docutils==0.9.1
+gevent==0.13.8
+greenlet==0.4.0
 gunicorn==0.15.0
 ipython==0.13.1
 kombu==2.4.8
@@ -28,6 +30,6 @@ pylint==0.26.0
 python-dateutil==1.5
 python-memcached==1.48
 pytz==2012h
-requests==0.14.2
 redis==2.6.2
+requests==0.14.2
 wsgiref==0.1.2
