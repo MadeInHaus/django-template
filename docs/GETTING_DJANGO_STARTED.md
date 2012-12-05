@@ -15,8 +15,8 @@ install package
 ## Initialize and start server
 ```
 vagrant up
-fab syncdb
-fab runserver
+fab vagrant.syncdb
+fab vagrant.runserver
 ```
 
 
