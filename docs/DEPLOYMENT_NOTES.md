@@ -12,9 +12,9 @@ Project specific instructions would be included in this file as well.
 
 # Heroku quick start
 - install the heroku app, if not already installed
-- ```git add . ; git commit -a -m 'initial commit'```
-- ```heroku create app-name```
-- ```heroku config:set APP_ENV=heroku```
-- ```heroku addons:add heroku-postgresql:dev```
-- ```heroku pg:promote HEROKU_POSTGRESQL_CRIMSON_URL```
-- ```git push heroku master```
+- ```git add . ; git commit -a -m 'initial commit'
+heroku create app-name
+heroku config:set APP_ENV=heroku
+heroku addons:add heroku-postgresql:dev
+heroku pg:promote HEROKU_POSTGRESQL_CRIMSON_URL
+git push heroku master```
