@@ -18,7 +18,7 @@ Project specific instructions would be included in this file as well.
 - create a dev db (or provision a larger db as necessary
 - promote db to be default
 - deploy to heroku
-- syncdb
+- syncdb (this step will require creation of an admin user)
 - page should serve
 
 ```
