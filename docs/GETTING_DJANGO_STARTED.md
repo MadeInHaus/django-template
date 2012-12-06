@@ -17,6 +17,7 @@ install package
 vagrant up
 fab vagrant.syncdb
 fab vagrant.runserver
+view the site running at: localhost:8080/
 ```
 
 
