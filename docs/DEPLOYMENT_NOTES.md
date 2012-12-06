@@ -27,7 +27,7 @@ git commit -a -m 'initial commit'
 heroku create app-name
 heroku config:set APP_ENV=heroku
 heroku addons:add heroku-postgresql:dev
-heroku pg:promote HEROKU_POSTGRESQL_CRIMSON_URL
+heroku pg:promote HEROKU_POSTGRESQL_(use result from last command)
 git push heroku master
 heroku run ./manage.py syncdb
 heroku open
