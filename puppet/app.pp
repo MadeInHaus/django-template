@@ -14,5 +14,7 @@ node default{
     include app::libevent
     include app::pipreq
     include app::memcache
+    include app::node
+    
 }
 

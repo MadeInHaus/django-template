@@ -37,12 +37,20 @@ def celerybeat():
     with cd("/var/www"):
         run('python manage.py celerybeat --loglevel=INFO')
 
+
+@task
+@roles('vagrant')        
+def initdb():
+    with cd("/var/www"):
+        run('yes no | python manage.py syncdb')
+        run('python manage.py createsuperuser --username=user --email=user@host.com')
+
 @task
 @roles('vagrant')        
 def syncdb():
     with cd("/var/www"):
-        run('yes no | python manage.py syncdb')
-        run('python manage.py createsuperuser --username=user --email=user@host.com')
+        run('python manage.py syncdb')
+        
 
 @task
 @roles('vagrant')        
@@ -50,4 +58,12 @@ def resetdb():
     run("mysql -u vagrant -pvagrant -e 'drop database if exists django'")
     run('mysql -u vagrant -pvagrant -e "create database django"')
     syncdb()
+
+
+@task
+@roles('vagrant')
+def collectstatic():
+    with cd("/var/www"):
+        run('python manage.py collectstatic')
+
     

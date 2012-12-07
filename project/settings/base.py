@@ -80,7 +80,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.staticfiles',
 
-    #'require',
+    'require',
     #'debug-toolbar',
     'gunicorn',
     'tastypie',
@@ -157,9 +157,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'collected-static')
 STATIC_URL = '/static/'
 
 # see django-require if S3 is required https://github.com/etianen/django-require
-#STATICFILES_STORAGE = 'require.storage.OptimizedStaticFilesStorage'
+STATICFILES_STORAGE = 'require.storage.OptimizedStaticFilesStorage'
+
+#should be off on production
+SERVE_STATIC = True
 
 # Additional locations the staticfiles app will traverse
+
 DEV_STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 STATICFILES_DIRS = (DEV_STATIC_ROOT,)
 
@@ -224,25 +228,27 @@ LOG_FILENAME = None
 # Django Require settings
 
 # The baseUrl to pass to the r.js optimizer.
-REQUIRE_BASE_URL = "javascripts"
+REQUIRE_BASE_URL = "js"
 
 # The name of a build profile to use for your project, relative to REQUIRE_BASE_URL.
 # A sensible value would be 'app.build.js'. Leave blank to use the built-in default build profile.
-REQUIRE_BUILD_PROFILE = None
+REQUIRE_BUILD_PROFILE = "app.build.js"
 
 # The name of the require.js script used by your project, relative to REQUIRE_BASE_URL.
-REQUIRE_JS = "require.js"
+REQUIRE_JS = "libs/require.js"
 
 # A dictionary of standalone modules to build with almond.js.
 # See the section on Standalone Modules, below.
 REQUIRE_STANDALONE_MODULES = {}
 
 # Whether to run django-require in debug mode.
-REQUIRE_DEBUG = DEBUG
+REQUIRE_DEBUG = False
 
 # A tuple of files to exclude from the compilation result of r.js.
-REQUIRE_EXCLUDE = ("build.txt",) 
+REQUIRE_EXCLUDE = ("build.txt",)
 
+# The execution environment in which to run r.js: node or rhino.
+REQUIRE_ENVIRONMENT = "node"
 
 # Debug toolbar settings
 DEBUG_TOOLBAR_PANELS = (
