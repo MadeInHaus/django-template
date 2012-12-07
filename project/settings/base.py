@@ -159,7 +159,11 @@ STATIC_URL = '/static/'
 # see django-require if S3 is required https://github.com/etianen/django-require
 STATICFILES_STORAGE = 'require.storage.OptimizedStaticFilesStorage'
 
+#should be off on production
+SERVE_STATIC = True
+
 # Additional locations the staticfiles app will traverse
+
 DEV_STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 STATICFILES_DIRS = (DEV_STATIC_ROOT,)
 
@@ -238,7 +242,7 @@ REQUIRE_JS = "libs/require.js"
 REQUIRE_STANDALONE_MODULES = {}
 
 # Whether to run django-require in debug mode.
-REQUIRE_DEBUG = True #DEBUG
+REQUIRE_DEBUG = False
 
 # A tuple of files to exclude from the compilation result of r.js.
 REQUIRE_EXCLUDE = ("build.txt",)
