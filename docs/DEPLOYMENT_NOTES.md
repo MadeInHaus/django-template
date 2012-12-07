@@ -18,7 +18,7 @@ Project specific instructions would be included in this file as well.
 - create a dev db (or provision a larger db as necessary
 - promote db to be default
 - deploy to heroku
-- syncdb
+- syncdb (this step will require creation of an admin user)
 - page should serve
 
 ```
@@ -27,7 +27,7 @@ git commit -a -m 'initial commit'
 heroku create app-name
 heroku config:set APP_ENV=heroku
 heroku addons:add heroku-postgresql:dev
-heroku pg:promote HEROKU_POSTGRESQL_CRIMSON_URL
+heroku pg:promote HEROKU_POSTGRESQL_(use result from last command)
 git push heroku master
 heroku run ./manage.py syncdb
 heroku open
