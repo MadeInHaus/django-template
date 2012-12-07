@@ -14,3 +14,4 @@ MANIFEST
 celerybeat.pid
 *.sw[op]
 collected-static/
+nohup.out
