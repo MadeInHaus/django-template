@@ -109,7 +109,7 @@ def css_watch():
 @task
 @roles('vagrant')
 def freeze():
-    run('/home/vagrant/.venv/bin/pip freeze > requirements.txt')
+    run('/home/vagrant/.venv/bin/pip freeze > /var/www/requirements.txt')
 
 @task
 def css_compile():
