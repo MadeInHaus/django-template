@@ -4,6 +4,7 @@ build
 dist
 .DS_Store
 *.local.py
+local_settings.py
 .project
 .pydevproject
 .settings
@@ -15,3 +16,4 @@ celerybeat.pid
 *.sw[op]
 collected-static/
 nohup.out
+project/settings/hosts/localhost.py
