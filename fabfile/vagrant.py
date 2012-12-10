@@ -15,9 +15,9 @@ exec_sass_compile = "sass --update --style compressed {}:{}"
 
 @task
 def runall():
-    #local('nohup fab vagrant.celery &')
-    #local('nohup fab vagrant.celerybeat &')
-    #local('nohup fab vagrant.css_watch &')
+    local('nohup fab vagrant.celery &')
+    local('nohup fab vagrant.celerybeat &')
+    local('nohup fab vagrant.css_watch &')
     local('nohup fab vagrant.runserver &')
     local('tail -f nohup.out')
 
