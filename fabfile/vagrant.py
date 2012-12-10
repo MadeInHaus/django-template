@@ -84,9 +84,14 @@ def syncdb():
 @task
 @roles('vagrant')        
 def resetdb():
-    run("mysql -u vagrant -pvagrant -e 'drop database if exists django'")
-    run('mysql -u vagrant -pvagrant -e "create database django"')
-    syncdb()
+    # mysql
+    #run("mysql -u vagrant -pvagrant -e 'drop database if exists django'")
+    #run('mysql -u vagrant -pvagrant -e "create database django"')
+    
+    # postgres
+    run('dropdb django')
+    run('createdb django')
+    initdb()
 
 
 @task
