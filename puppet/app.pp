@@ -11,6 +11,7 @@ node default{
     include app::vim
     include app::git
     include app::postgresql
+    # include app::mysql
     include app::libevent
     include app::pipreq
     include app::memcache

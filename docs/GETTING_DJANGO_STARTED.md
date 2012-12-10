@@ -21,3 +21,14 @@ view the site running at: localhost:8080/
 ```
 
 
+
+## DELETE ME AFTER SETUP ##
+if you want to switch to mysql from postgres:
+* puppet/app.pp
+    * delete include app::postgresql
+    * uncomment include app::mysql
+* fabfile/vagrant.py
+    * in function def resetdb(): comment out postgres lines, and uncomment mysql lines    
+* project/settings/base.py
+    * change 'ENGINE': 'django.db.backends.postgresql_psycopg2', to  'ENGINE': 'django.db.backends.mysql', 
+
