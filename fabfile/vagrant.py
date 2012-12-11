@@ -108,6 +108,11 @@ def css_watch():
 
 @task
 @roles('vagrant')
+def pipinstall():
+    run('/home/vagrant/.venv/bin/pip install -r /var/www/requirements.txt')
+
+@task
+@roles('vagrant')
 def freeze():
     run('/home/vagrant/.venv/bin/pip freeze > /var/www/requirements.txt')
 
