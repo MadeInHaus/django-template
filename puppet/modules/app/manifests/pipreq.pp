@@ -1,7 +1,6 @@
 class app::pipreq {
 
     exec{'create-virtualenv':
-        require => Package['python-pip','postgresql','libpq-dev','rabbitmq-server','redis-server','memcached','libevent-dev'],
         command => "virtualenv --no-site-packages /home/vagrant/.venv",
         unless  => "test -d /home/vagrant/.venv",
         timeout => 0,
