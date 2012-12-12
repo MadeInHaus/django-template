@@ -18,8 +18,8 @@ class mysql::python(
   $package_ensure = 'present'
 ) inherits mysql::params {
 
-  package { 'python-mysqldb':
-    name   => $package_name,
+  package { 'libmysqlclient-dev':
+    name   => 'libmysqlclient-dev',
     ensure => $package_ensure,
   }
 
