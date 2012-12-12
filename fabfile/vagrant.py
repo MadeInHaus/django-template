@@ -69,7 +69,7 @@ def celerybeat():
         run('python manage.py celerybeat --loglevel=INFO')
 
 @task
-@roles('vagrant')        
+@roles('vagrant')
 def initdb():
     with cd("/var/www"):
         run('yes no | python manage.py syncdb')
@@ -78,19 +78,19 @@ def initdb():
 
 
 @task
-@roles('vagrant')        
+@roles('vagrant')
 def syncdb():
     with cd("/var/www"):
         run('python manage.py syncdb')
         run('python manage.py migrate')
 
 @task
-@roles('vagrant')        
+@roles('vagrant')
 def resetdb():
     # mysql
     #run("mysql -u vagrant -pvagrant -e 'drop database if exists django'")
     #run('mysql -u vagrant -pvagrant -e "create database django"')
-    
+
     # postgres
     run('dropdb django')
     run('createdb django')
@@ -108,6 +108,16 @@ def collectstatic():
 def css_watch():
     with cd("/var/www"):
         run(exec_sass_watch.format(src_path, css_path))
+
+@task
+@roles('vagrant')
+def pipinstall():
+    run('/home/vagrant/.venv/bin/pip install -r /var/www/requirements.txt')
+
+@task
+@roles('vagrant')
+def freeze():
+    run('/home/vagrant/.venv/bin/pip freeze > /var/www/requirements.txt')
 
 @task
 def css_compile():
