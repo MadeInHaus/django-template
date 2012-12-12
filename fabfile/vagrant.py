@@ -73,13 +73,16 @@ def celerybeat():
 def initdb():
     with cd("/var/www"):
         run('yes no | python manage.py syncdb')
+        run('python manage.py migrate')
         run('python manage.py createsuperuser --username=user --email=user@host.com')
+
 
 @task
 @roles('vagrant')        
 def syncdb():
     with cd("/var/www"):
         run('python manage.py syncdb')
+        run('python manage.py migrate')
 
 @task
 @roles('vagrant')        
