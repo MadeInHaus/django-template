@@ -14,8 +14,15 @@ class app::pipreq {
         user    => vagrant,
     }
 
-    exec{'pip-install':
+    exec{'setup-virtualenv-fabric':
         require => Exec['setup-virtualenv'],
+        command => "echo 'source /home/vagrant/.venv/bin/activate' >> /home/vagrant/.profile",
+        unless  => "grep -c 'source /home/vagrant/.venv/bin/activate' /home/vagrant/.profile",
+        user    => vagrant,
+    }
+
+    exec{'pip-install':
+        require => Exec['setup-virtualenv-fabric'],
         command => "/home/vagrant/.venv/bin/pip install -r /var/www/requirements.txt",
         timeout => 0,
         user    => vagrant,
