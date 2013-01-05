@@ -1,4 +1,3 @@
-
 ## Install Fabric
 ```
 easy_install fabric
@@ -17,9 +16,14 @@ install package
 vagrant up
 fab vagrant.initdb
 fab vagrant.runserver
-view the site running at: localhost:8080/
+view the site running at: (localhost:8080)[http://localhost:8080/]
 ```
 
+## Local Dev settings
+create a file in: 
+project/settings/hosts/local_settings.py
+
+This file overrides settings and is ignored by git automatically.
 
 
 ## DELETE ME AFTER SETUP ##
