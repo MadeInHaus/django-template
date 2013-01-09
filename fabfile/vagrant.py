@@ -123,6 +123,7 @@ def freeze():
     run('/home/vagrant/.venv/bin/pip freeze > /var/www/requirements.txt')
 
 @task
+@roles('vagrant')
 def css_compile():
     with cd("/var/www"):
         run(exec_sass_compile.format(src_path, css_path))
