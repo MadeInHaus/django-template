@@ -87,6 +87,8 @@ INSTALLED_APPS = (
     'djcelery',
     'south',
     
+    'utils',
+    
 )
 
 # A tuple of IP addresses that see debug comments, when DEBUG is True

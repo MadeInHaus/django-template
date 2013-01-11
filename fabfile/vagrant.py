@@ -106,6 +106,9 @@ def collectstatic():
 @task
 @roles('vagrant')
 def css_watch():
+    with settings(warn_only=True):
+        # Killing all sass --watch processes before executing a new one
+        run("ps ax | grep '[s]ass.*watch' | awk '{ print $1 }' | xargs sudo kill -9")
     with cd("/var/www"):
         run(exec_sass_watch.format(src_path, css_path))
 
@@ -120,6 +123,7 @@ def freeze():
     run('/home/vagrant/.venv/bin/pip freeze > /var/www/requirements.txt')
 
 @task
+@roles('vagrant')
 def css_compile():
     with cd("/var/www"):
         run(exec_sass_compile.format(src_path, css_path))
