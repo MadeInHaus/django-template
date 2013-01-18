@@ -1,5 +1,5 @@
-Django==1.4.2
-Fabric==1.5.0
+Django==1.4.3
+Fabric==1.5.2
 PyYAML==3.10
 South==0.7.6
 Werkzeug==0.8.3
