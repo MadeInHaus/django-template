@@ -15,6 +15,7 @@ exec_sass_compile = "sass --update --style compressed {}:{}"
 
 @task
 def runall():
+    local('touch nohup.out')
     local('nohup fab vagrant.celery &')
     local('nohup fab vagrant.celerybeat &')
     local('nohup fab vagrant.css_watch &')
