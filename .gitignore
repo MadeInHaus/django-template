@@ -17,3 +17,4 @@ celerybeat.pid
 collected-static/
 nohup.out
 project/settings/hosts/localhost.py
+*.css
