@@ -18,3 +18,4 @@ collected-static/
 nohup.out
 project/settings/hosts/localhost.py
 *.css
+project/static/img/sprites/icons-*.png
