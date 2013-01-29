@@ -15,6 +15,7 @@ exec_sass_compile = "compass compile {} --output-style compressed"
 
 @task
 def runall():
+    local('touch nohup.out')
     local('nohup fab vagrant.celery &')
     local('nohup fab vagrant.celerybeat &')
     local('nohup fab vagrant.css_watch &')
@@ -74,7 +75,7 @@ def initdb():
     with cd("/var/www"):
         run('yes no | python manage.py syncdb')
         run('python manage.py migrate')
-        run('python manage.py createsuperuser --username=user --email=user@host.com')
+        run('python manage.py createsuperuser')
 
 
 @task

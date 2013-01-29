@@ -1,6 +1,7 @@
 class app::pipreq {
 
     exec{'create-virtualenv':
+        require => Class['app::python'],
         command => "virtualenv --no-site-packages /home/vagrant/.venv",
         unless  => "test -d /home/vagrant/.venv",
         timeout => 0,
@@ -21,8 +22,14 @@ class app::pipreq {
         user    => vagrant,
     }
 
-    exec{'pip-install':
+    exec{'update-distribute':
         require => Exec['setup-virtualenv-fabric'],
+        command => "/home/vagrant/.venv/bin/pip install -U distribute",
+        user    => vagrant,
+    }
+
+    exec{'pip-install':
+        require => Exec['update-distribute'],
         command => "/home/vagrant/.venv/bin/pip install -r /var/www/requirements.txt",
         timeout => 0,
         user    => vagrant,
