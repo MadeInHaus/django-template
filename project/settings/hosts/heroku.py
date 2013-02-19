@@ -1,9 +1,10 @@
 from settings import *
 import dj_database_url
+import sys
 
 DEBUG = False
 
-print "Using Heroku Settings"
+print >> sys.stderr, "Using Heroku Settings"
 
 
 DATABASES = {

@@ -22,4 +22,5 @@ urlpatterns = patterns('',
 if getattr(settings, 'SERVE_STATIC', False) and settings.SERVE_STATIC:
     urlpatterns += patterns('',
         url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT, 'show_indexes': False,}),
+        url(r'^uploads/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': False,}),
     )
