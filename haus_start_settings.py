@@ -5,8 +5,9 @@
 
 # Also, this file will NOT be copied
 import os
+import random
 from random import choice
-from string import ascii_lowercase, digits
+from string import ascii_letters, ascii_lowercase, digits
 import stat
 import json
 import shutil
@@ -18,10 +19,10 @@ def init_git():
         os.system("git init")
 
 def random_password(length=13):
-    chars = string.ascii_letters + string.digits + '!@#$%^&*()'
+    chars = ascii_letters + digits + '!@#$%^&*()'
     random.seed = (os.urandom(1024))
 
-    return ''.join(random.choice(chars) for i in range(length))
+    return ''.join(choice(chars) for i in range(length))
 
 
 def get_replace_vars(no_prompt=False):
