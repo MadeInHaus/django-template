@@ -29,8 +29,8 @@ Welcome to project __PROJECT_NAME__.
 ### CMS
 
 Admin
-    Username: admin
-    Password: haus
+    Username: __ADMIN_USERNAME__
+    Password: __ADMIN_PASSWORD__
 
 ### System Architecture Notes
 

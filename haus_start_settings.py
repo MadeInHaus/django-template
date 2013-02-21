@@ -17,10 +17,19 @@ def init_git():
     if not os.path.exists('.git'):
         os.system("git init")
 
+def random_password(length=13):
+    chars = string.ascii_letters + string.digits + '!@#$%^&*()'
+    random.seed = (os.urandom(1024))
+
+    return ''.join(random.choice(chars) for i in range(length))
+
+
 def get_replace_vars(no_prompt=False):
     defaults = {
         'PROJECT_NAME' : 'Haus Django Project',
-        'ADMIN_EMAIL' : 'cms-admin@madeinhaus.com'
+        'ADMIN_EMAIL' : 'cms-admin@madeinhaus.com',
+        'ADMIN_USERNAME' : 'admin',
+        'ADMIN_PASSWORD' : random_password(10), 
     }
     replace = {}
 
