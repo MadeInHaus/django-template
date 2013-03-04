@@ -8,9 +8,9 @@ base_path           = "./project/static/css"
 src_path   = base_path + "/src"
 css_path    = base_path + "/"
 
-# compass execs
-exec_sass_watch   = "compass watch {}"
-exec_sass_compile = "compass compile {} --output-style compressed"
+# sass execs
+exec_sass_watch   = "compass watch {} -c {}"
+exec_sass_compile = "compass compile {} -c {} --trace --force"
 
 
 @task
@@ -107,12 +107,12 @@ def collectstatic():
 
 @task
 @roles('vagrant')
-def css_watch():
+def css_watch(new_config=None):
     with settings(warn_only=True):
-        # Killing all sass --watch processes before executing a new one
-        run("ps ax | grep '[s]ass.*watch' | awk '{ print $1 }' | xargs sudo kill -9")
+        # Killing all sass processes before executing a new one
+        run("ps ax | grep [c]ompass | awk '{ print $1 }' | xargs sudo kill -9")
     with cd("/var/www"):
-        run(exec_sass_watch.format(css_path))
+        run(exec_sass_watch.format(base_path, config_path))
 
 @task
 @roles('vagrant')
