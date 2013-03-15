@@ -11,11 +11,13 @@ This process will compile all of the Javascript with the [r.js](http://github.co
 Your build profile should be located at `project/static/js/app.build.js`
 
 To toggle the build process while developing, create a file at `project/settings/hosts/local_settings.py`
+**This file will alter your env compared to the other developers.**
 
 Inside `local_settings.py` add:
     
     from settings import *
-    
+    import sys
+    print >> sys.stderr, "**Using Local Settings**"
     # False = Do not serve project/static/
     DEBUG = False
     # True = server collected-static/
