@@ -1,0 +1,4 @@
+base:
+  '*':
+    - app
+    #- sql.postgres

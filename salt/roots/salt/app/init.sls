@@ -1,0 +1,14 @@
+include:
+  - ubuntu
+  - rabbit
+  - redis
+  - python
+  - python.postgres
+  - python.gevent
+  - git
+  - sql.postgres
+  - vagrant.postgres
+  - python.pipreq
+  - memcache
+  - node
+  - compass
