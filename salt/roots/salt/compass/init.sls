@@ -1,3 +1,0 @@
-compass:
-  gem:
-    - installed
