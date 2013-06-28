@@ -31,7 +31,12 @@ sys.path.remove(_path)
 # should go here.
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': False,
+    'disable_existing_loggers': True,
+    'filters': {
+        'require_debug_false': {
+                                '()': 'django.utils.log.RequireDebugFalse'
+                                }
+    },
     'formatters': {
         'verbose': {
             'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
@@ -42,26 +47,34 @@ LOGGING = {
     },
     'handlers': {
         'mail_admins': {
-           'level': 'ERROR',
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
         },
         'stream' : {
-            'level': 'WARNING',
+            'level': 'DEBUG',
             'class': 'logging.StreamHandler'
         },
         'file' : {
-            'level' : 'WARNING',
+            'level' : 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': LOG_FILENAME and LOG_FILENAME or '/dev/null',
             'formatter': 'simple'
         }
     },
+           
     'loggers': {
         '': {
-            'handlers': DEBUG and ['stream'] or ['mail_admins', 'file'],
-            'level': DEBUG and 'DEBUG' or 'WARNING',
-            'propagate': True,
+            'handlers': DEBUG and ['stream'] or ['mail_admins', 'file', 'stream'],
+            'level': 'DEBUG',
+            'propagate': False,
         },
+        'django.db': {
+            'handlers': DEBUG and ['stream'] or ['mail_admins', 'file', 'stream'],
+            'level': 'WARNING',
+            'propagate': False,
+        },
+
     }
 }
 
