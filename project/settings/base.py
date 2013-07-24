@@ -20,7 +20,7 @@ ADMINS = (('__PROJECT_NAME__ administrator', '__ADMIN_EMAIL__'),)
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', 
+        'ENGINE': 'django_postgrespool', 
         'NAME': 'django',            
         'USER': 'vagrant',                      
         'PASSWORD': 'vagrant',                  
@@ -28,6 +28,17 @@ DATABASES = {
         'PORT': '',                      
     }
 }
+
+SOUTH_DATABASE_ADAPTERS = {
+    'default': 'south.db.postgresql_psycopg2'
+}
+
+DATABASE_POOL_ARGS = {
+    'max_overflow': 7,
+    'pool_size': 7,
+    'recycle': 300,
+}
+
 
 # CELERY SETTINGS
 djcelery.setup_loader()
