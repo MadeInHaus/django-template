@@ -129,13 +129,14 @@ def resetdb(load_images=False, delete_images=False):
 
 @task
 def load_fixture_images():
+    # basic media fixture stub
     uploads_dir = path.abspath(path.join(path.dirname(__file__), '../uploads'))
     with lcd(uploads_dir):
         with settings(warn_only=True):
             local('rm -rf ./*')
-        local('curl -sLO https://dl.dropboxusercontent.com/s/zpb8troupk1x2g1/haus_com_assets.tar.bz2')
-        local('tar xjvf haus_com_assets.tar.bz2')
-        local('rm haus_com_assets.tar.bz2')
+        #local('curl -sLO https://domain/assets.tar.bz2')
+        #local('tar xjvf assets.tar.bz2')
+        #local('rm assets.tar.bz2')
 
 @task
 @roles('vagrant')
