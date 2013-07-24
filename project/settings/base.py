@@ -15,8 +15,11 @@ if APPS_ROOT not in sys.path:
     sys.path.insert(0, APPS_ROOT)
 
 # People who get code error notifications when DEBUG=False
-ADMINS = (('__PROJECT_NAME__ administrator', '__ADMIN_EMAIL__'),)
+ADMINS = (('__PROJECT_SHORT_NAME__ administrator', '__ADMIN_EMAIL__'),)
 
+DEFAULT_FROM_EMAIL = 'donotreply@madeinhaus.com'
+SERVER_EMAIL = 'donotreply@madinhaus.com'
+EMAIL_SUBJECT_PREFIX = '[__PROJECT_SHORT_NAME__] '
 
 DATABASES = {
     'default': {

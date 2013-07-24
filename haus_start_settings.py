@@ -28,9 +28,10 @@ def random_password(length=13):
 def get_replace_vars(no_prompt=False):
     defaults = {
         'PROJECT_NAME' : 'Haus Django Project',
-        'ADMIN_EMAIL' : 'cms-admin@madeinhaus.com',
+        'PROJECT_SHORT_NAME' : 'haus',
+        'ADMIN_EMAIL' : 'hausheroku@gmail.com',
         'ADMIN_USERNAME' : 'admin',
-        'ADMIN_PASSWORD' : random_password(10), 
+        'ADMIN_PASSWORD' : random_password(10),
     }
     replace = {}
 
