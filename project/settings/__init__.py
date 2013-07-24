@@ -29,17 +29,25 @@ sys.path.remove(_path)
 # Any other configuration that should apply to all
 # settings versions but relies on other settings (ie: debug)
 # should go here.
+
+# Email logging is off by default,  config variable must be set to enable
+ENABLE_EMAIL_LOGGING = os.environ.get('ENABLE_EMAIL_LOGGING', 'NO') == 'YES'
+ERROR_RATE_LIMIT = 60*10 # limit to one duplicate error every 10 minutes...
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
     'filters': {
         'require_debug_false': {
                                 '()': 'django.utils.log.RequireDebugFalse'
-                                }
+                                },
+        'ratelimit': {
+                      '()': 'utils.error_ratelimit_filter.RateLimitFilter',
+                      }
     },
     'formatters': {
         'verbose': {
-            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+            'format': '%(name)s %(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
         },
         'simple': {
             'format': '%(levelname)s %(asctime)s %(message)s'
@@ -48,29 +56,30 @@ LOGGING = {
     'handlers': {
         'mail_admins': {
             'level': 'ERROR',
-            'filters': ['require_debug_false'],
+           'filters': ['require_debug_false', 'ratelimit'],
             'class': 'django.utils.log.AdminEmailHandler'
         },
         'stream' : {
             'level': 'DEBUG',
-            'class': 'logging.StreamHandler'
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
         },
         'file' : {
             'level' : 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': LOG_FILENAME and LOG_FILENAME or '/dev/null',
-            'formatter': 'simple'
+            'formatter': 'verbose'
         }
     },
            
     'loggers': {
         '': {
-            'handlers': DEBUG and ['stream'] or ['mail_admins', 'file', 'stream'],
+            'handlers': ENABLE_EMAIL_LOGGING and ['stream', 'mail_admins'] or ['stream'],
             'level': 'DEBUG',
             'propagate': False,
         },
         'django.db': {
-            'handlers': DEBUG and ['stream'] or ['mail_admins', 'file', 'stream'],
+            'handlers': ENABLE_EMAIL_LOGGING and ['stream', 'mail_admins'] or ['stream'],
             'level': 'WARNING',
             'propagate': False,
         },

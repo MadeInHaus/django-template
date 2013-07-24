@@ -23,12 +23,12 @@ EMAIL_SUBJECT_PREFIX = '[__PROJECT_SHORT_NAME__] '
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django_postgrespool', 
-        'NAME': 'django',            
-        'USER': 'vagrant',                      
-        'PASSWORD': 'vagrant',                  
-        'HOST': '',                      
-        'PORT': '',                      
+        'ENGINE': 'django_postgrespool',
+        'NAME': 'django',
+        'USER': 'vagrant',
+        'PASSWORD': 'vagrant',
+        'HOST': '',
+        'PORT': '',
     }
 }
 
