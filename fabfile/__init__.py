@@ -1,5 +1,5 @@
 from fabric.api import env
-import vagrant
+import vagrant, prod
 from vagrant import runall,killall,resetdb
 
 env.roledefs       = {

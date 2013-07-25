@@ -27,7 +27,7 @@ def parse_vars(string):
 def compile_prod_css():
     log.warning('Calling killall,  all process will be killed!')
     killall()
-    
+
     with  shell_env(APP_ENV=PROD_ENV):
         with cd("/var/www"):
             settings = parse_vars(run("./manage.py settings_vars STATIC_URL"))
@@ -44,10 +44,10 @@ def compile_prod_css():
 @task
 @roles('vagrant')
 def deploy():
-    local('git push production master:master')
     compile_prod_css()
     deploy_static_media()
     deploy_user_media()
+    local('git push production master:master')
 
 @task
 @roles('vagrant')
