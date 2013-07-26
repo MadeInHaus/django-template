@@ -1,0 +1,17 @@
+{
+	"dev": {
+		"heroku_app_name": null,
+		"app_env_name": "heroku_dev",
+		"heroku_remote_name": "dev"
+	},
+	"staging": {
+		"heroku_app_name": null,
+		"app_env_name": "heroku_staging",
+		"heroku_remote_name": "staging"
+	},
+	"prod": {
+		"heroku_app_name": "ancient-cove-4657",
+		"app_env_name": "heroku",
+		"heroku_remote_name": "production"
+	}
+}
