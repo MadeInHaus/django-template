@@ -90,8 +90,11 @@ LOGGING = {
 # URL That doesn't change.
 PERM_STATIC_URL = STATIC_URL
 
-version_file = os.path.join(BASE_DIR, 'VERSION')
-if os.path.isfile(version_file):
-    data = open(version_file, 'r').read().strip()
-    if data:
-        STATIC_URL = STATIC_URL + 'c-%s/' % data
+
+ASSET_VERSION = os.environ.get("ASSET_VERSION", None)
+if ASSET_VERSION:
+    VERSION_PREFIX =  '%s/' % ASSET_VERSION
+    AWS_LOCATION = VERSION_PREFIX
+    STATIC_URL += VERSION_PREFIX
+    MEDIA_URL = STATIC_URL + 'uploads/'
+

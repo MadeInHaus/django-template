@@ -21,6 +21,12 @@ Project specific instructions would be included in this file as well.
 - syncdb (this step will require creation of an admin user)
 - page should serve
 
+# disable collectstatic on heroku, it does not work with require compile anyway
+```
+$ heroku labs:enable user-env-compile
+$ heroku config:set DISABLE_COLLECTSTATIC=1
+```
+
 ```
 git add .
 git commit -a -m 'initial commit'
