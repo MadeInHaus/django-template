@@ -10,7 +10,7 @@
 		"heroku_remote_name": "staging"
 	},
 	"prod": {
-		"heroku_app_name": "ancient-cove-4657",
+		"heroku_app_name": null,
 		"app_env_name": "heroku",
 		"heroku_remote_name": "production"
 	}
