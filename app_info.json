@@ -1,16 +1,16 @@
 {
 	"dev": {
-		"heroku_app_name": null,
+		"heroku_app_name": "app-name-dev",
 		"app_env_name": "heroku_dev",
 		"heroku_remote_name": "dev"
 	},
 	"staging": {
-		"heroku_app_name": null,
+		"heroku_app_name": "app-name-staging",
 		"app_env_name": "heroku_staging",
 		"heroku_remote_name": "staging"
 	},
 	"prod": {
-		"heroku_app_name": null,
+		"heroku_app_name": "app-name",
 		"app_env_name": "heroku",
 		"heroku_remote_name": "production"
 	}

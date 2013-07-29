@@ -1,5 +1,9 @@
 from settings import *
 
+DEBUG = False
+SERVE_STATIC = False
+
+
 # Indicate your database settings for staging here
 #
 # DATABASES = {

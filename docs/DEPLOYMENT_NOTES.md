@@ -27,6 +27,30 @@ $ heroku labs:enable user-env-compile
 $ heroku config:set DISABLE_COLLECTSTATIC=1
 ```
 
+# setup app_info.json
+Each heroku environment must have a corresponding entry in app_info.json.  This config file is responsible for defining the heroku app name, corresponding app_env name and git remote name.
+
+```
+{
+	"dev": {
+		"heroku_app_name": "app-name-dev",
+		"app_env_name": "heroku_dev",
+		"heroku_remote_name": "dev"
+	},
+	"staging": {
+		"heroku_app_name": "app-name-staging",
+		"app_env_name": "heroku_staging",
+		"heroku_remote_name": "staging"
+	},
+	"prod": {
+		"heroku_app_name": "app-name",
+		"app_env_name": "heroku",
+		"heroku_remote_name": "production"
+	}
+}
+```
+
+
 ```
 git add .
 git commit -a -m 'initial commit'

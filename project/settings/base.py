@@ -178,7 +178,7 @@ STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'require.storage.OptimizedStaticFilesStorage'
 
 #should be off on production
-SERVE_STATIC = True
+SERVE_STATIC = False
 
 # Additional locations the staticfiles app will traverse
 
