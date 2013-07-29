@@ -94,6 +94,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.staticfiles',
 
+    'django_extensions',
+
     'require',
     #'debug-toolbar',
     'gunicorn',

@@ -32,6 +32,7 @@ def get_replace_vars(no_prompt=False):
         'ADMIN_EMAIL' : 'hausheroku@gmail.com',
         'ADMIN_USERNAME' : 'admin',
         'ADMIN_PASSWORD' : random_password(10),
+        'BUCKET_NAME' : 'asset-bucket',
     }
     replace = {}
 
