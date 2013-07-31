@@ -33,7 +33,7 @@ def get_replace_vars(no_prompt=False):
         'ADMIN_USERNAME' : 'admin',
         'ADMIN_PASSWORD' : random_password(10),
         'BUCKET_NAME' : 'asset-bucket',
-        'USE_HTTPS_FOR_ASSETS' : False,
+        'USE_HTTPS_FOR_ASSETS' : 'False',
     }
     replace = {}
 
