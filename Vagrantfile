@@ -8,12 +8,11 @@ Vagrant::Config.run do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "precise32"
+  config.vm.box = "haus"
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
-  config.vm.box_url = "http://files.vagrantup.com/precise32.box"
-  # MIGHT HAVE TO CHANGE THIS TO 32 FOR NON 64 BIT MACHINES
+  config.vm.box_url = "http://s3.amazonaws.com/haus_backend_utility/haus.box"
 
   # Boot with a GUI so you can see the screen. (Default is headless)
   # config.vm.boot_mode = :gui
