@@ -29,7 +29,9 @@ AWS_QUERYSTRING_AUTH = False
 STATICFILES_STORAGE = 'utils.storage.OptimizedS3BotoStorage'
 DEFAULT_FILE_STORAGE = "utils.storage.MediaRootS3BotoStorage"
 
-STATIC_URL = 'https://s3.amazonaws.com/{}/'.format(AWS_STORAGE_BUCKET_NAME)
-MEDIA_URL = 'https://s3.amazonaws.com/{}/uploads/'.format(AWS_STORAGE_BUCKET_NAME)
+ASSET_PROTOCOL = 'https' if USE_HTTPS_FOR_ASSETS else 'http'
+
+STATIC_URL = '{}://s3.amazonaws.com/{}/'.format(ASSET_PROTOCOL, AWS_STORAGE_BUCKET_NAME)
+MEDIA_URL = '{}://s3.amazonaws.com/{}/uploads/'.format(ASSET_PROTOCOL, AWS_STORAGE_BUCKET_NAME)
 
 INSTALLED_APPS += ('storages',)
