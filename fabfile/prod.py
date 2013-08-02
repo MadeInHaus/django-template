@@ -118,6 +118,6 @@ def sync_prod_db(reset_db=False):
         # note that this is destructive of the PROD DB
         #local('heroku pg:reset DATABASE_URL') #add "--confirm haus" to remove required input
         pass
-    local('heroku run ./manage.py syncdb')
-    local('heroku run ./manage.py migrate')
+    local('heroku run ./manage.py syncdb -a {}'.format(HEROKU_APP_NAME))
+    local('heroku run ./manage.py migrate -a {}'.format(HEROKU_APP_NAME))
     

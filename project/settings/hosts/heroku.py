@@ -2,9 +2,19 @@ from settings import *
 import dj_database_url
 import sys
 
+from json import load
+
 DEBUG = False
 
 print >> sys.stderr, "Using Heroku Settings"
+
+try:
+    APP_INFO = load(open(BASE_DIR + "/app_info.json"))['prod']
+except:
+    print "Failed to load app_info.json"
+    APP_INFO = {}
+
+print "using appinfo: ", APP_INFO
 
 
 DATABASES = {
@@ -35,3 +45,5 @@ STATIC_URL = '{}://s3.amazonaws.com/{}/'.format(ASSET_PROTOCOL, AWS_STORAGE_BUCK
 MEDIA_URL = '{}://s3.amazonaws.com/{}/uploads/'.format(ASSET_PROTOCOL, AWS_STORAGE_BUCKET_NAME)
 
 INSTALLED_APPS += ('storages',)
+
+ALLOWED_HOSTS += ['{}.herokuapp.com'.format(APP_INFO.get('heroku_app_name',''))]

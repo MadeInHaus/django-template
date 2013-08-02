@@ -299,3 +299,5 @@ DEBUG_TOOLBAR_CONFIG = {
     'TAG': 'div',
     'ENABLE_STACKTRACES' : True,
 }
+
+ALLOWED_HOSTS = ('localhost')
