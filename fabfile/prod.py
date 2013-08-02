@@ -89,7 +89,6 @@ def deploy():
     compile_css()
     version = current_asset_version()
     deploy_static_media(ASSET_VERSION=version)
-    deploy_user_media(ASSET_VERSION=version)
     local('git push production master:master')
     sync_prod_db()
     set_heroku_asset_version(version)
@@ -104,11 +103,10 @@ def deploy_static_media(ASSET_VERSION=''):
 
 @task
 @roles('vagrant')
-def deploy_user_media(ASSET_VERSION=''):
-    with  shell_env(APP_ENV=APP_ENV_NAME, ASSET_VERSION=ASSET_VERSION):
+def deploy_user_media():
+    with  shell_env(APP_ENV=APP_ENV_NAME):
         with cd("/var/www"):
-            prefix = ('{}/'.format(ASSET_VERSION) if ASSET_VERSION else '') + 'uploads'
-            run('./manage.py sync_media_s3 --prefix={}'.format(prefix))
+            run('./manage.py sync_media_s3 --prefix=uploads')
 
 
 @task
