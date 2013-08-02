@@ -11,8 +11,8 @@ Add this to middleware:
 
 Add these settings:
 USE_BASIC_AUTH = True
-BASIC_AUTH_USER = 'admin'
-BASIC_AUTH_PASS = 'haus'
+BASIC_AUTH_USER = 'user'
+BASIC_AUTH_PASS = 'password'
 
     """
 
