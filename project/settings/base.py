@@ -300,4 +300,4 @@ DEBUG_TOOLBAR_CONFIG = {
     'ENABLE_STACKTRACES' : True,
 }
 
-ALLOWED_HOSTS = ('localhost')
+ALLOWED_HOSTS = ('localhost', )

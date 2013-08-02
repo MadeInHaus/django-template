@@ -46,4 +46,4 @@ MEDIA_URL = '{}://s3.amazonaws.com/{}/uploads/'.format(ASSET_PROTOCOL, AWS_STORA
 
 INSTALLED_APPS += ('storages',)
 
-ALLOWED_HOSTS += ['{}.herokuapp.com'.format(APP_INFO.get('heroku_app_name',''))]
+ALLOWED_HOSTS += ('{}.herokuapp.com'.format(APP_INFO.get('heroku_app_name','')), )
