@@ -1,6 +1,6 @@
 from fabric.api import env
-import vagrant, prod
-from vagrant import runall,killall,resetdb
+import vagrant, prod, dev, staging
+from vagrant import runall, killall, resetdb, resetall
 
 env.roledefs       = {
                       'vagrant'                : ['vagrant@127.0.0.1:2222']
