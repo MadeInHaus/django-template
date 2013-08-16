@@ -62,3 +62,6 @@ git push heroku master
 heroku run ./manage.py syncdb
 heroku open
 ```
+
+# experimental deploy process
+[labs-preboot](https://devcenter.heroku.com/articles/labs-preboot/)

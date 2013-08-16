@@ -14,7 +14,7 @@ USE_BASIC_AUTH = True
 BASIC_AUTH_USER = 'user'
 BASIC_AUTH_PASS = 'password'
 
-    """
+"""
 
     def process_request(self, request):
         if getattr(settings, 'USE_BASIC_AUTH', False):
