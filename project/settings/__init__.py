@@ -85,7 +85,7 @@ LOGGING = {
         },
         'z.pool': {
             'handlers': ENABLE_EMAIL_LOGGING and ['stream', 'mail_admins'] or ['stream'],
-            'level': 'DEBUG',
+            'level': 'WARNING',
             'propagate': False,
         },
 
