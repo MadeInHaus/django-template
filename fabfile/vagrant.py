@@ -4,6 +4,10 @@ from fabric.api import local, cd, lcd, get, env, roles, execute, task, run, \
                        settings, abort, hide
 from fabric.colors import yellow
 
+import logging
+logging.basicConfig()
+log = logging.getLogger(__name__)
+
 
 # paths
 base_path   = "./project/static"
@@ -38,6 +42,7 @@ def runall():
 @task
 @roles('vagrant')
 def killall():
+    log.warning(yellow('killing all processes'))
     with settings(warn_only=True):
         run("ps ax | grep [r]unserver | awk '{ print $1 }' | xargs sudo kill -9")
         run("ps ax | grep [r]un_gunicorn | awk '{ print $1 }' | xargs sudo kill -9")
@@ -116,6 +121,7 @@ def resetdb(load_images=False, delete_images=False):
     # mysql
     #run("mysql -u vagrant -pvagrant -e 'drop database if exists django'")
     #run('mysql -u vagrant -pvagrant -e "create database django"')
+    killall()
 
     # postgres
     run('dropdb django')

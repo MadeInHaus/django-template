@@ -5,8 +5,9 @@ from fabric.context_managers import shell_env
 from vagrant import collectstatic, css_compile, killall
 from fabric.colors import red, green, yellow
 
-import logging
 from json import load
+
+import logging
 logging.basicConfig()
 log = logging.getLogger(__name__)
 
