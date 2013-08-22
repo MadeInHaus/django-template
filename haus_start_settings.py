@@ -26,14 +26,36 @@ def random_password(length=13):
 
 
 def get_replace_vars(no_prompt=False):
+    # defaults should be documented
     defaults = {
-        'PROJECT_NAME' : 'Haus Django Project',
-        'PROJECT_SHORT_NAME' : 'haus',
-        'ADMIN_EMAIL' : 'hausheroku@gmail.com',
-        'ADMIN_USERNAME' : 'admin',
-        'ADMIN_PASSWORD' : random_password(10),
-        'BUCKET_NAME' : 'asset-bucket',
-        'USE_HTTPS_FOR_ASSETS' : 'False',
+        'PROJECT_NAME' : {
+                    'default': 'Haus Django Project',
+                    'doc': 'Project name for use in titles and documentation.',
+                    },
+        'PROJECT_SHORT_NAME' : {
+                    'default': 'haus',
+                    'doc': 'Short form of project name for use in email subject lines, and other places that require a short form.',
+                    },
+        'ADMIN_EMAIL' : {
+                    'default': 'hausheroku@gmail.com',
+                    'doc': 'Email to send error logs to and use as an admin email address.',
+                    },
+        'ADMIN_USERNAME' : {
+                    'default': 'admin',
+                    'doc': 'Username for the admin (super user) created on init.',
+                    },
+        'ADMIN_PASSWORD' : {
+                    'default': random_password(10),
+                    'doc': 'Password for the admin (super user)',
+                    },
+        'BUCKET_NAME' : {
+                    'default': 'asset-bucket',
+                    'doc': 'Name of AWS bucket for this project.',
+                    },
+        'USE_HTTPS_FOR_ASSETS' : {
+                    'default': 'False',
+                    'doc': 'Choose whether static assets should be served via https or http',
+                    },
     }
     replace = {}
 
@@ -44,15 +66,15 @@ def get_replace_vars(no_prompt=False):
             config = j.get('config', {})
             defaults.update(config.get('vars', {}))
 
-    for var, default in defaults.items():
+    for var, info in defaults.items():
         placemark = '__%s__' % var
         replace[placemark] = None
         help = var.replace('_', ' ')
         while not replace[placemark]:
             if no_prompt:
-                replace[placemark] = default
+                replace[placemark] = info['default']
             else:
-                prompt = '%s [%s]: ' % (help, default)
+                prompt = '%s\n%s [%s]: ' % (info['doc'], help, info['default'])
                 replace[placemark] = raw_input(prompt) or default
 
     # Always replace secret key

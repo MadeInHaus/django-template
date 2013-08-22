@@ -1,10 +1,6 @@
 # Deployment Notes
 
-Here is where deployment instructions will go.
 
-Should be a simple command to deploy to dev/stage/prod on heroku.
-
-Eventually other standard platform deployments could also go here.
 
 Project specific instructions would be included in this file as well.
 
@@ -20,6 +16,21 @@ Project specific instructions would be included in this file as well.
 - deploy to heroku
 - syncdb (this step will require creation of an admin user)
 - page should serve
+
+
+
+```
+git add .
+git commit -a -m 'initial commit'
+heroku create app-name
+heroku config:set APP_ENV=heroku
+heroku addons:add heroku-postgresql:dev
+heroku pg:promote HEROKU_POSTGRESQL_(use result from last command)
+git push heroku master
+heroku run ./manage.py syncdb
+heroku open
+```
+
 
 # disable collectstatic on heroku, it does not work with require compile anyway
 ```
@@ -48,19 +59,6 @@ Each heroku environment must have a corresponding entry in app_info.json.  This 
 		"heroku_remote_name": "production"
 	}
 }
-```
-
-
-```
-git add .
-git commit -a -m 'initial commit'
-heroku create app-name
-heroku config:set APP_ENV=heroku
-heroku addons:add heroku-postgresql:dev
-heroku pg:promote HEROKU_POSTGRESQL_(use result from last command)
-git push heroku master
-heroku run ./manage.py syncdb
-heroku open
 ```
 
 # experimental deploy process
