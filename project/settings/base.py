@@ -14,6 +14,8 @@ APPS_ROOT = os.path.join(PROJECT_ROOT, "apps")
 if APPS_ROOT not in sys.path:
     sys.path.insert(0, APPS_ROOT)
 
+WSGI_APPLICATION = "wsgi.application"
+
 # People who get code error notifications when DEBUG=False
 ADMINS = (('__PROJECT_SHORT_NAME__ administrator', '__ADMIN_EMAIL__'),)
 
