@@ -75,14 +75,16 @@ def get_replace_vars(no_prompt=False):
 
     for info in defaults:
         var = info['var_name']
+        default = info['default']
+        
         placemark = '__%s__' % var
         replace[placemark] = None
         help = var.replace('_', ' ')
         while not replace[placemark]:
             if no_prompt:
-                replace[placemark] = info['default']
+                replace[placemark] = default
             else:
-                prompt = '\n%s\n%s [%s]: ' % (info['doc'], help, info['default'])
+                prompt = '\n%s\n%s [%s]: ' % (info['doc'], help, default)
                 replace[placemark] = raw_input(prompt) or default
 
     # Always replace secret key
