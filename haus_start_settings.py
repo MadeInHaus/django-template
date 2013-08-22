@@ -13,8 +13,6 @@ import json
 import shutil
 import fnmatch
 
-from fabric.colors import green
-
 def init_git():
     # Only init git if it isn't already there.
     if not os.path.exists('.git'):
@@ -76,7 +74,7 @@ def get_replace_vars(no_prompt=False):
             if no_prompt:
                 replace[placemark] = info['default']
             else:
-                prompt = '\n%s\n%s [%s]: ' % (green(info['doc']), help, info['default'])
+                prompt = '\n%s\n%s [%s]: ' % (info['doc'], help, info['default'])
                 replace[placemark] = raw_input(prompt) or default
 
     # Always replace secret key
