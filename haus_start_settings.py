@@ -27,36 +27,43 @@ def random_password(length=13):
 
 def get_replace_vars(no_prompt=False):
     # defaults should be documented
-    defaults = {
-        'PROJECT_NAME' : {
-                    'default': 'Haus Django Project',
-                    'doc': 'Project name for use in titles and documentation.',
-                    },
-        'PROJECT_SHORT_NAME' : {
-                    'default': 'haus',
-                    'doc': 'Short form of project name for use in email subject lines, and other places that require a short form.',
-                    },
-        'ADMIN_EMAIL' : {
-                    'default': 'hausheroku@gmail.com',
-                    'doc': 'Email to send error logs to and use as an admin email address.',
-                    },
-        'ADMIN_USERNAME' : {
-                    'default': 'admin',
-                    'doc': 'Username for the admin (super user) created on init.',
-                    },
-        'ADMIN_PASSWORD' : {
-                    'default': random_password(10),
-                    'doc': 'Password for the admin (super user)',
-                    },
-        'BUCKET_NAME' : {
-                    'default': 'asset-bucket',
-                    'doc': 'Name of AWS bucket for this project.',
-                    },
-        'USE_HTTPS_FOR_ASSETS' : {
-                    'default': 'False',
-                    'doc': 'Choose whether static assets should be served via https or http',
-                    },
-    }
+    defaults = (
+        {
+         'var_name': 'PROJECT_NAME',
+         'default': 'Haus Django Project',
+         'doc': 'Project name for use in titles and documentation.',
+        },
+        {
+         'var_name': 'PROJECT_SHORT_NAME',
+         'default': 'haus',
+         'doc': 'Short form of project name for use in email subject lines, and other places that require a short form.',
+        },
+        {
+         'var_name': 'ADMIN_EMAIL',
+         'default': 'hausheroku@gmail.com',
+         'doc': 'Email to send error logs to and use as an admin email address.',
+        },
+        {
+         'var_name': 'ADMIN_USERNAME',
+         'default': 'admin',
+         'doc': 'Username for the admin (super user) created on init.',
+        },
+        {
+         'var_name': 'ADMIN_PASSWORD',
+         'default': random_password(10),
+         'doc': 'Password for the admin (super user)',
+        },
+        {
+         'var_name': 'BUCKET_NAME',
+         'default': 'asset-bucket',
+         'doc': 'Name of AWS bucket for this project.',
+        },
+        {
+         'var_name': 'USE_HTTPS_FOR_ASSETS',
+         'default': 'False',
+         'doc': 'Choose whether static assets should be served via https or http',
+         },
+    )
     replace = {}
 
     # Take defaults from frontend package if available
@@ -66,7 +73,8 @@ def get_replace_vars(no_prompt=False):
             config = j.get('config', {})
             defaults.update(config.get('vars', {}))
 
-    for var, info in defaults.items():
+    for info in defaults:
+        var = info['var_name']
         placemark = '__%s__' % var
         replace[placemark] = None
         help = var.replace('_', ' ')
