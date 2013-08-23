@@ -2,6 +2,8 @@ from settings import *
 import dj_database_url
 import sys
 
+import os
+
 from json import load
 
 DEBUG = False
@@ -28,8 +30,8 @@ DATABASES['default']['ENGINE'] = 'django_postgrespool'
 SERVE_STATIC = True
 
 # AWS settings
-AWS_ACCESS_KEY_ID = ''
-AWS_SECRET_ACCESS_KEY = ''
+AWS_ACCESS_KEY_ID = os.environ.get('HAUS_AWS_ACCESS_KEY_ID','')
+AWS_SECRET_ACCESS_KEY = os.environ.get('HAUS_AWS_SECRET_ACCESS_KEY','')
 
 AWS_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME = '__BUCKET_NAME__'
 
