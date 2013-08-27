@@ -4,6 +4,8 @@ from fabric.api import local, cd, lcd, get, env, roles, execute, task, run, \
                        settings, abort, hide
 from fabric.colors import yellow
 
+from haus_vars import with_vars
+
 import logging
 logging.basicConfig()
 log = logging.getLogger(__name__)
@@ -29,6 +31,14 @@ with hide('everything'):
 
 if remote_readme != local_readme:
     abort('Different VM running')
+
+import os
+
+@task
+@roles('vagrant')
+@with_vars
+def env_test():
+    run('env | grep HAUS')
 
 @task
 def runall():

@@ -45,17 +45,17 @@ Each heroku environment must have a corresponding entry in app_info.json.  This 
 {
 	"dev": {
 		"heroku_app_name": "app-name-dev",
-		"app_env_name": "heroku_dev",
+		"APP_ENV": "heroku_dev",
 		"heroku_remote_name": "dev"
 	},
 	"staging": {
 		"heroku_app_name": "app-name-staging",
-		"app_env_name": "heroku_staging",
+		"APP_ENV": "heroku_staging",
 		"heroku_remote_name": "staging"
 	},
 	"prod": {
 		"heroku_app_name": "app-name",
-		"app_env_name": "heroku",
+		"APP_ENV": "heroku",
 		"heroku_remote_name": "production"
 	}
 }
