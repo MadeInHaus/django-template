@@ -84,7 +84,9 @@ EMAIL_SUBJECT_PREFIX = '[__PROJECT_NAME__]'
 FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880
 
 # List of locations of the fixture data files, in search order
-FIXTURE_DIRS = ()
+FIXTURE_DIRS = (
+    os.path.join(PROJECT_ROOT, 'fixtures'),
+)
 
 # A tuple of strings designating all the enabled applications
 INSTALLED_APPS = (
