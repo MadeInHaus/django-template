@@ -67,7 +67,7 @@ def with_vars(f):
             d['STATIC_URL'] = get_static_url(d)
 
         if 'asset_version' in kwargs:
-            d['asset_version'] = kwargs['asset_version']
+            d['ASSET_VERSION'] = kwargs['asset_version']
         with shell_env(**d):
             print yellow('using vars: {}'.format(d))
             return f( *args, **kwargs )

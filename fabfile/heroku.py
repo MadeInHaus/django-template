@@ -65,9 +65,9 @@ class CustomTask(Task):
 def deploy(env=None, ):
     """Deploy static and source to heroku environment"""
     compile_env_css()
-    version = current_asset_version(env)
-    deploy_static_media(env, asset_version=version)
-    deploy_source(env, asset_version=version)
+    version = current_asset_version(env=env)
+    deploy_static_media(env=env, asset_version=version)
+    deploy_source(env=env, asset_version=version)
 
 
 @with_vars
@@ -75,7 +75,7 @@ def deploy_source(env=None, asset_version=''):
     """Deploy source to heroku environment"""
     print green('Deploying source to Heroku')
     local('git push {} {}:master'.format(APP_INFO[env]["heroku_remote_name"], APP_INFO[env]["branch_name"]))
-    sync_prod_db(env)
+    sync_prod_db(env=env)
     set_heroku_asset_version(env, asset_version)
 
 
