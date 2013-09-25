@@ -6,7 +6,7 @@ from fabric.context_managers import shell_env
 from haus_vars import with_vars
 
 import vagrant, prod, dev, staging
-from vagrant import runall, killall, resetdb, resetall, test
+from vagrant import runall, killall, resetdb, resetall
 
 env.roledefs       = {
                       'vagrant'                : ['vagrant@127.0.0.1:2222']

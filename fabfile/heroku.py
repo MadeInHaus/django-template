@@ -16,11 +16,6 @@ log = logging.getLogger(__name__)
 __all__ = []
 
 
-def compile_env_css():
-    log.warning(red('Calling killall,  all process will be killed!'))
-    killall()
-    css_compile()
-    log.warning(red('Note killall was called so vagrant server/compass will be down'))
 
 
 def get_hash(env):
@@ -61,11 +56,10 @@ class CustomTask(Task):
 
 
 
-@with_vars
 def deploy(env=None, ):
     """Deploy static and source to heroku environment"""
-    compile_env_css()
     version = current_asset_version(env=env)
+    compile_env_css(env=env, asset_version=version)
     deploy_static_media(env=env, asset_version=version)
     deploy_source(env=env, asset_version=version)
 
@@ -106,3 +100,9 @@ def sync_prod_db(env=None, reset_db=False):
     local('heroku run ./manage.py syncdb -a {}'.format(APP_INFO[env]["heroku_app_name"]))
     local('heroku run ./manage.py migrate -a {}'.format(APP_INFO[env]["heroku_app_name"]))
 
+@with_vars
+def compile_env_css(env=None, asset_version=''):
+    log.warning(red('Calling killall,  all process will be killed!'))
+    killall()
+    css_compile()
+    log.warning(red('Note killall was called so vagrant server/compass will be down'))

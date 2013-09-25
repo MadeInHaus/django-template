@@ -62,12 +62,14 @@ def with_vars(f):
     def wrapper( *args, **kwargs ):
         d = {}
         d.update(HAUS_VARS)
+
+        if 'asset_version' in kwargs:
+            d['ASSET_VERSION'] = kwargs['asset_version']
+
         if 'env' in kwargs:
             d.update(APP_INFO[kwargs['env']])
             d['STATIC_URL'] = get_static_url(d)
 
-        if 'asset_version' in kwargs:
-            d['ASSET_VERSION'] = kwargs['asset_version']
         with shell_env(**d):
             print yellow('using vars: {}'.format(d))
             return f( *args, **kwargs )

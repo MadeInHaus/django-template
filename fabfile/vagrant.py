@@ -18,7 +18,7 @@ config_path = css_path + "config.rb"
 
 
 # sass execs
-exec_sass_watch   = "compass watch {} -c {}"
+exec_sass_watch   = "compass watch --poll {} -c {}"
 #exec_sass_compile = "compass compile {} --output-style compressed -c {} --force"
 exec_sass_compile = "compass compile {} -c {} --trace --force"
 
@@ -108,6 +108,7 @@ def initdb(load_images=False):
 
     if load_images:
         load_fixture_images()
+    load_fixtures()
 
 
 @task
@@ -142,6 +143,12 @@ def resetdb(load_images=False, delete_images=False):
             run('rm -rf ./*')
 
     initdb(load_images)
+
+@task
+def load_fixtures():
+    with cd("/var/www"):
+        run("python manage.py loaddata  project/fixtures/local_data.json")
+
 
 @task
 def load_fixture_images():
@@ -184,11 +191,3 @@ def freeze():
 def css_compile():
     with cd("/var/www"):
         run(exec_sass_compile.format(base_path, config_path))
-
-@task
-@roles('vagrant')
-def test():
-    with cd("/var/www"):
-        run('python manage.py test')
-
-
