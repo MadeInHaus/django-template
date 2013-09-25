@@ -163,9 +163,9 @@ def load_fixture_images():
 
 @task
 @roles('vagrant')
-def collectstatic(no_input=False):
+def collectstatic(no_input=False, skip_admin=False):
     with cd("/var/www"):
-        run('python manage.py collectstatic {}'.format('--noinput' if no_input else ''))
+        run('python manage.py collectstatic {} {}'.format('--noinput' if no_input else '', '-i "admin*" -i "grappelli*"' if skip_admin else ''))
 
 @task
 @roles('vagrant')

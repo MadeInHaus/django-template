@@ -23,7 +23,6 @@ def get_hash(env):
     local('git checkout {}'.format(APP_INFO[env]["branch_name"]))
     return local('git rev-parse HEAD', capture=True).strip()[:20]
 
-
 def get_heroku_asset_version(env):
     git_hash = local('heroku config:get ASSET_VERSION -a {}'.format(APP_INFO[env]["heroku_app_name"]), capture=True)
     print "got hash: ", yellow('{}'.format(git_hash))
@@ -56,28 +55,29 @@ class CustomTask(Task):
 
 
 
-def deploy(env=None, ):
+def deploy(env=None, quick=False):
     """Deploy static and source to heroku environment"""
-    version = current_asset_version(env=env)
+    version = get_heroku_asset_version(env) if quick else current_asset_version(env=env)
     compile_env_css(env=env, asset_version=version)
-    deploy_static_media(env=env, asset_version=version)
-    deploy_source(env=env, asset_version=version)
+    deploy_static_media(env=env, asset_version=version, quick=quick)
+    deploy_source(env=env, asset_version=version, quick=quick)
 
 
 @with_vars
-def deploy_source(env=None, asset_version=''):
+def deploy_source(env=None, asset_version='', quick=False):
     """Deploy source to heroku environment"""
     print green('Deploying source to Heroku')
     local('git push {} {}:master'.format(APP_INFO[env]["heroku_remote_name"], APP_INFO[env]["branch_name"]))
     sync_prod_db(env=env)
-    set_heroku_asset_version(env, asset_version)
+    if not quick:
+        set_heroku_asset_version(env, asset_version)
 
 
 @with_vars
-def deploy_static_media(env=None, asset_version=''):
+def deploy_static_media(env=None, asset_version='', quick=False):
     """Deploy static (runs collectstatic within given environment)"""
-    print green('Deploying static media')
-    collectstatic(no_input=True)
+    print green('Deploying static media {}'.format('__quick__' if quick else ''))
+    collectstatic(no_input=True, skip_admin=quick)
 
 
 @with_vars
