@@ -104,7 +104,7 @@ INSTALLED_APPS = (
     'django_extensions',
 
     'require',
-    #'debug-toolbar',
+    #'debug_toolbar',
     'gunicorn',
     'tastypie',
     'djcelery',
