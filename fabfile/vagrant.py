@@ -139,6 +139,7 @@ def resetdb(load_images=False, delete_images=False):
     run('createdb django')
 
     if delete_images:
+        run('mkdir -p /var/www/uploads')
         with cd("/var/www/uploads"):
             run('rm -rf ./*')
 
