@@ -139,7 +139,7 @@ def resetdb(load_images=False, delete_images=False):
     run('createdb django')
 
     if delete_images:
-        run('mkdir -p /var/www/uploads')
+        run("mkdir -p /var/www/uploads")
         with cd("/var/www/uploads"):
             run('rm -rf ./*')
 
@@ -192,3 +192,10 @@ def freeze():
 def css_compile():
     with cd("/var/www"):
         run(exec_sass_compile.format(base_path, config_path))
+
+@task
+@roles('vagrant')
+def test():
+    with cd("/var/www"):
+        run('python manage.py test')
+

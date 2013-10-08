@@ -1,6 +1,5 @@
 from heroku import CustomTask, deploy, deploy_source, deploy_static_media, deploy_user_media, sync_prod_db
 
-
 deploy = CustomTask(deploy, 'prod')
 deploy_source = CustomTask(deploy_source, 'prod')
 deploy_static_media = CustomTask(deploy_static_media, 'prod')

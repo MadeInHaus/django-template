@@ -32,6 +32,12 @@ def get_heroku_asset_version(env):
 def set_heroku_asset_version(env, git_hash):
     local('heroku config:set ASSET_VERSION={} -a {}'.format(git_hash, APP_INFO[env]["heroku_app_name"]))
 
+def set_heroku_maintenance_page(env, url):
+    local('heroku config:set MAINTENANCE_PAGE_URL={} -a {}'.format(url, APP_INFO[env]["heroku_app_name"]))
+
+def set_heroku_error_page(env, url):
+    local('heroku config:set ERROR_PAGE_URL={} -a {}'.format(url, APP_INFO[env]["heroku_app_name"]))
+
 
 def current_asset_version(env, ):
     return get_hash(env)
@@ -60,11 +66,17 @@ def deploy(env=None, quick=False):
     version = get_heroku_asset_version(env) if quick else current_asset_version(env=env)
     compile_env_css(env=env, asset_version=version)
     deploy_static_media(env=env, asset_version=version, quick=quick)
+    deploy_maintenance_pages(env=env, asset_version=version, quick=quick)
     deploy_source(env=env, asset_version=version, quick=quick)
 
+@with_vars
+def deploy_maintenance_pages(env=None, asset_version='', quick=False, haus_vars={}):
+    url = "{}error.html".format(haus_vars['STATIC_URL'])
+    set_heroku_error_page(env, url)
+    set_heroku_maintenance_page(env, url)
 
 @with_vars
-def deploy_source(env=None, asset_version='', quick=False):
+def deploy_source(env=None, asset_version='', quick=False, haus_vars={}):
     """Deploy source to heroku environment"""
     print green('Deploying source to Heroku')
     local('git push {} {}:master'.format(APP_INFO[env]["heroku_remote_name"], APP_INFO[env]["branch_name"]))
@@ -74,14 +86,14 @@ def deploy_source(env=None, asset_version='', quick=False):
 
 
 @with_vars
-def deploy_static_media(env=None, asset_version='', quick=False):
+def deploy_static_media(env=None, asset_version='', quick=False, haus_vars={}):
     """Deploy static (runs collectstatic within given environment)"""
     print green('Deploying static media {}'.format('__quick__' if quick else ''))
     collectstatic(no_input=True, skip_admin=quick)
 
 
 @with_vars
-def deploy_user_media(env=None ):
+def deploy_user_media(env=None, haus_vars={} ):
     """Deploy user media to media location on s3"""
     print green('Deploying user media')
     with cd("/var/www"):
@@ -89,7 +101,7 @@ def deploy_user_media(env=None ):
 
 
 @with_vars
-def sync_prod_db(env=None, reset_db=False):
+def sync_prod_db(env=None, reset_db=False, haus_vars={}):
     """Run syncdb and migrate within given environment"""
     print green('sync/migrate DB')
     if reset_db:
@@ -101,7 +113,7 @@ def sync_prod_db(env=None, reset_db=False):
     local('heroku run ./manage.py migrate -a {}'.format(APP_INFO[env]["heroku_app_name"]))
 
 @with_vars
-def compile_env_css(env=None, asset_version=''):
+def compile_env_css(env=None, asset_version='', haus_vars={}):
     log.warning(red('Calling killall,  all process will be killed!'))
     killall()
     css_compile()

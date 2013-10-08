@@ -72,6 +72,7 @@ def with_vars(f):
 
         with shell_env(**d):
             print yellow('using vars: {}'.format(d))
+            kwargs['haus_vars'] = d
             return f( *args, **kwargs )
     return wrapper
 
