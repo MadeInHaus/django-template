@@ -153,6 +153,7 @@ MIDDLEWARE_CLASSES = (
 
     # Debug
     #'debug_toolbar.middleware.DebugToolbarMiddleware',
+    #'utils.profile_middleware.ProfileMiddleware',
 
     # Basic Auth
     #'utils.basic_auth_middleware.AuthMiddleware',
