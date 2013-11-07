@@ -20,7 +20,7 @@ WSGI_APPLICATION = "wsgi.application"
 ADMINS = (('__PROJECT_SHORT_NAME__ administrator', '__ADMIN_EMAIL__'),)
 
 DEFAULT_FROM_EMAIL = 'donotreply@madeinhaus.com'
-SERVER_EMAIL = 'donotreply@madinhaus.com'
+SERVER_EMAIL = 'donotreply@madeinhaus.com'
 EMAIL_SUBJECT_PREFIX = '[__PROJECT_SHORT_NAME__] '
 
 # setting for using HTTPS or HTTP protocol for serving assets
