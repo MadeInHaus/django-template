@@ -8,6 +8,7 @@ node default{
     include app::rabbitmq
     include app::redis
     include app::python
+    include app::pillow
     include app::vim
     include app::git
     include app::postgresql
