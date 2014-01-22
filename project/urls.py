@@ -24,3 +24,9 @@ if getattr(settings, 'SERVE_STATIC', False) and settings.SERVE_STATIC:
         url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT, 'show_indexes': False,}),
         url(r'^uploads/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': False,}),
     )
+    
+# api profile view for tastypie endpoints
+if getattr(settings, 'DEBUG', False):
+    urlpatterns += patterns('',
+                            (r'^api_profile/v1/(?P<resource>.*)/$', 'utils.api_views.api_profile'),
+                            )
