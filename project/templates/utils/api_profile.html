@@ -1,0 +1,13 @@
+<html>
+	<head></head>
+	<body style="margin: 3%">
+		<h2 style="color: orange">Check your console for an interactive object</h2>
+		<h1>Raw Response:</h1>
+		<span id="theReponse" style="display: block; margin-right: 180px; border: solid 1px black; background: #ccc; font-family: courier; font-size: 12px; padding: 2%; line-height: 1.5em">
+	    	{{api_response.content}}
+		</span>
+		<script>
+			console.log({{api_response.content|safe}})
+		</script>
+	</body>
+</html>
