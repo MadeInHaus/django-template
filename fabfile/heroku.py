@@ -47,16 +47,19 @@ def current_asset_version(env, ):
 class CustomTask(Task):
     roles = ['vagrant']
     
-    def __init__(self, func, env, *args, **kwargs):
+    def __init__(self, func, env, quick=True, *args, **kwargs):
         super(CustomTask, self).__init__(*args, **kwargs)
         self.func = func
         self.env = env
+        self.quick = quick
         self.name = func.__name__
         self.__doc__ = func.__doc__
 
     def run(self, *args, **kwargs):
         if 'env' not in kwargs:
             kwargs['env'] = self.env
+        if 'quick' not in kwargs:
+            kwargs['quick'] = self.quick
         return self.func(*args, **kwargs)
 
 
