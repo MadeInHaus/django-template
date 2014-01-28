@@ -1,6 +1,7 @@
-from fabric.api import local, run, cd, abort
+from fabric.api import local, run, cd, abort, task
 from fabric.tasks import Task
 from fabric.context_managers import shell_env
+from json import load
 
 from vagrant import collectstatic, css_compile, killall
 from fabric.colors import red, green, yellow
@@ -15,8 +16,11 @@ log = logging.getLogger(__name__)
 # suppress tasks
 __all__ = []
 
-
-
+@task
+def remotes():
+    """setup the heroku git remotes per the app_info.json config file"""
+    for env in ('dev', 'staging', 'prod'):
+        local("git remote add {} git@heroku.com:{}.git".format(APP_INFO[env]['heroku_remote_name'], APP_INFO[env]['heroku_app_name']))
 
 def get_hash(env):
     print red("CHECKING OUT BRANCH: {}".format(APP_INFO[env]["branch_name"]))
@@ -37,7 +41,6 @@ def set_heroku_maintenance_page(env, url):
 
 def set_heroku_error_page(env, url):
     local('heroku config:set ERROR_PAGE_URL={} -a {}'.format(url, APP_INFO[env]["heroku_app_name"]))
-
 
 def current_asset_version(env, ):
     return get_hash(env)

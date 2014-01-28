@@ -5,6 +5,8 @@ from fabric.context_managers import shell_env
 
 from haus_vars import with_vars
 
+from heroku import remotes
+
 import vagrant, prod, dev, staging, s3
 from vagrant import runall, killall, resetdb, resetall, test
 
