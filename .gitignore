@@ -17,5 +17,5 @@ celerybeat.pid
 collected-static/
 nohup.out
 project/settings/hosts/localhost.py
-*.css
+project/static/css/*.css
 project/static/img/sprites/icons-*.png

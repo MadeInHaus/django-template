@@ -14,7 +14,7 @@ def setup(shortname=None):
 
 	conn = boto.connect_s3()
 
-	buckets = (shortname, shortname + '_staging', shortname + '_dev')
+	buckets = (shortname, shortname + '-staging', shortname + '-dev')
 	tagset = boto.s3.tagging.TagSet()
 	tagset.add_tag("project",shortname)
 
@@ -25,3 +25,6 @@ def setup(shortname=None):
 		conn.create_bucket(bucket)
 		bucket = conn.get_bucket(bucket)
 		bucket.set_tags(tags)
+		bucket.make_public(True)
+
+	
