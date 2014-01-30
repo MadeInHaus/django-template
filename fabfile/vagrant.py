@@ -104,7 +104,7 @@ def initdb(load_images=False):
     with cd("/var/www"):
         run('yes no | python manage.py syncdb')
         run('python manage.py migrate')
-        run('python manage.py createsuperuser')
+        run('python manage.py createadmin')
 
     if load_images:
         load_fixture_images()
