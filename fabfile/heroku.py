@@ -69,6 +69,7 @@ class CustomTask(Task):
 
 def deploy(env=None, quick=False):
     """Deploy static and source to heroku environment"""
+    quick = str(quick).lower() != 'false'
     version = get_heroku_asset_version(env) if quick else current_asset_version(env=env)
     compile_env_css(env=env, asset_version=version)
     deploy_static_media(env=env, asset_version=version, quick=quick)

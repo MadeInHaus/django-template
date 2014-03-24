@@ -3,18 +3,21 @@
 		"heroku_app_name": "app-name-dev",
 		"APP_ENV": "heroku_dev",
 		"heroku_remote_name": "dev",
-		"branch_name": "dev"
+		"branch_name": "dev",
+		"s3_bucket": ""
 	},
 	"staging": {
 		"heroku_app_name": "app-name-staging",
 		"APP_ENV": "heroku_staging",
 		"heroku_remote_name": "staging",
-		"branch_name": "staging"
+		"branch_name": "staging",
+        "s3_bucket": ""
 	},
-	"prod": {
+	"production": {
 		"heroku_app_name": "app-name",
 		"APP_ENV": "heroku",
 		"heroku_remote_name": "production",
-		"branch_name": "master"
+		"branch_name": "master",
+        "s3_bucket": ""
 	}
 }

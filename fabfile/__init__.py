@@ -7,7 +7,7 @@ from haus_vars import with_vars
 
 from heroku import remotes
 
-import vagrant, prod, dev, staging, s3
+import vagrant, production, dev, staging, s3
 from vagrant import runall, killall, resetdb, resetall, test
 
 env.roledefs       = {
