@@ -1,9 +1,9 @@
-from django.contrib import admin
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
+from django.contrib import admin
 
-
+from django.conf import settings
 
 def admin_url(model, url, object_id=None):
     """
@@ -82,5 +82,28 @@ class SingletonAdmin(admin.ModelAdmin):
     
     class Media:
         js = [
-              '/static/admin/js/singleton.js',
+              settings.STATIC_URL+'admin/js/singleton.js',
               ]
+
+
+class SortableInlineAdmin(admin.TabularInline):
+    extra = 0
+    sortable_field_name = "position"
+
+    class Meta:
+        ordering = ['position']
+
+    class Media:
+        css = {'all': (settings.STATIC_URL+'admin/css/custom_admin.css', )}
+
+
+class SortableStackedInlineAdmin(admin.StackedInline):
+    extra = 0
+    sortable_field_name = "position"
+
+    class Meta:
+        ordering = ['position']
+
+    class Media:
+        css = {'all': (settings.STATIC_URL+'admin/css/custom_admin.css', )}
+        

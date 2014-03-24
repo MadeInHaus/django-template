@@ -1,0 +1,7 @@
+
+/* Hide poistion columns */
+.grp-th.position { display: none !important }
+.grp-td.position { display: none !important }
+
+
+.thumb { height: 42px; background: #777; }
