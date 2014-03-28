@@ -1,28 +1,64 @@
-class nodejs ( $version, $logoutput = 'on_failure' ) {
+# = Class: nodejs
+#
+# == Parameters:
+#
+# [*version*]
+#   The NodeJS version ('vX.Y.Z', 'latest' or 'stable').
+#
+# [*target_dir*]
+#   Where to install the executables.
+#
+# [*with_npm*]
+#   Whether to install NPM.
+#
+# [*make_install*]
+#   If false, will install from nodejs.org binary distributions.
+#
+# == Example:
+#
+#  include nodejs
+#
+#  class { 'nodejs':
+#    version  => 'v0.10.17'
+#  }
+#
+class nodejs (
+  $version      = 'stable',
+  $target_dir   = '/usr/local/bin',
+  $with_npm     = true,
+  $make_install = true,
+) {
 
-  if ! defined(Package['curl']) {
-    package { 'curl':
-      ensure => present,
-    }
+  nodejs::install { "nodejs-${version}":
+    version       => $version,
+    target_dir    => $target_dir,
+    with_npm      => $with_npm,
+    make_install  => $make_install,
   }
 
-  package { 'libssl-dev':
-    ensure => present,
-  }
-  package { 'build-essential':
-    ensure => present,
+  $node_version = $version ? {
+    undef     => $::nodejs_stable_version,
+    'stable'  => $::nodejs_stable_version,
+    'latest'  => $::nodejs_latest_version,
+    default   => $version
   }
 
-  # use nave, yo
-  exec { 'nave' :
-    command     => "bash -c \"\$(curl -s 'https://raw.github.com/isaacs/nave/master/nave.sh') usemain $version \"",
-    path        => [ "/usr/local/bin", "/bin" , "/usr/bin" ],
-    require     => [ Package[ 'curl' ], Package[ 'libssl-dev' ], Package[ 'build-essential' ] ],
-    environment => [ 'HOME=""', 'PREFIX=/usr/local/lib/node', 'NAVE_JOBS=1' ],
-    logoutput   => $logoutput,
-    # btw, this takes forever....
-    timeout     => 0,
-    unless      => "test \"v$version\" = \"\$(node -v)\""
+  $nodejs_version_path = "/usr/local/node/node-${$node_version}"
+  $nodejs_default_path = '/usr/local/node/node-default'
+
+  file { $nodejs_default_path:
+    ensure  => link,
+    target  => $nodejs_version_path,
+    require => Nodejs::Install["nodejs-${version}"],
+  }
+
+  file { '/etc/profile.d/nodejs.sh':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => template("${module_name}/nodejs.sh.erb"),
+    require => File[$nodejs_default_path],
   }
 
 }
