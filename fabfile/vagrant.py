@@ -1,15 +1,18 @@
 from os import path
-from subprocess import Popen
-from fabric.api import local, cd, lcd, get, env, roles, execute, task, run, \
+from fabric.api import local, cd, lcd, env, roles, execute, task, run, \
                        settings, abort, hide
 from fabric.colors import yellow
 
+
 from haus_vars import with_vars
+
 
 import logging
 logging.basicConfig()
 log = logging.getLogger(__name__)
 
+# config....
+use_celery = False
 
 # paths
 base_path   = "./project/static"
@@ -19,32 +22,34 @@ config_path = css_path + "config.rb"
 
 # sass execs
 exec_sass_watch   = "compass watch --poll {} -c {}"
-#exec_sass_compile = "compass compile {} --output-style compressed -c {} --force"
 exec_sass_compile = "compass compile {} -c {} --trace --force"
 
-# Check if current VM belongs to this project
-with hide('everything'):
-    root_dir = path.abspath(path.join(path.dirname(__file__), '..'))
-    readme_filename = path.join(root_dir, 'README.md')
-    local_readme  = local("md5 %s | awk '{ print $4 }'" % (readme_filename,), capture=True)
-    remote_readme = local("vagrant ssh -c 'md5sum /var/www/README.md' | awk '{ print $1 }'", capture=True)
 
-if remote_readme != local_readme:
-    abort('Different VM running')
 
-import os
+@task
+@roles('vagrant')
+def test_vagrant():
+    local_md5 = local('md5 README.md', capture=True).split()[3]
+    with cd('/var/www'):
+        remote_md5 = run('md5sum README.md').split()[0]
+    if not local_md5 == remote_md5:
+        abort('VM does not match,  another VM running?')
+
 
 @task
 @roles('vagrant')
 @with_vars
-def env_test():
+def env_test(*args, **kwargs):
+    print 'args: {} kwargs: {}'.format(args, kwargs)
     run('env | grep HAUS')
 
 @task
 def runall():
+    execute(test_vagrant)
     local('touch nohup.out')
-    local('nohup fab vagrant.celery &')
-    local('nohup fab vagrant.celerybeat &')
+    if use_celery:
+        local('nohup fab vagrant.celery &')
+        local('nohup fab vagrant.celerybeat &')
     local('nohup fab vagrant.css_watch &')
     local('nohup fab vagrant.runserver &')
     local('tail -f nohup.out')
@@ -52,21 +57,25 @@ def runall():
 @task
 @roles('vagrant')
 def killall():
+    execute(test_vagrant)
     log.warning(yellow('killing all processes'))
     with settings(warn_only=True):
-        run("ps ax | grep [r]unserver | awk '{ print $1 }' | xargs sudo kill -9")
-        run("ps ax | grep [r]un_gunicorn | awk '{ print $1 }' | xargs sudo kill -9")
-        run("ps ax | grep [w]orker | awk '{ print $1 }' | xargs sudo kill -9")
-        run("ps ax | grep [c]elerybeat | awk '{ print $1 }' | xargs sudo kill -9")
-        run("ps ax | grep [c]ompass | awk '{ print $1 }' | xargs sudo kill -9")
-        run("ps ax | grep [s]ass | awk '{ print $1 }' | xargs sudo kill -9")
+        with hide('warnings', 'running', 'stderr', 'stdout'):
+            run("ps ax | grep [r]unserver | awk '{ print $1 }' | xargs sudo kill -9")
+            run("ps ax | grep [r]un_gunicorn | awk '{ print $1 }' | xargs sudo kill -9")
+            if use_celery:
+                run("ps ax | grep [w]orker | awk '{ print $1 }' | xargs sudo kill -9")
+                run("ps ax | grep [c]elerybeat | awk '{ print $1 }' | xargs sudo kill -9")
+            run("ps ax | grep [c]ompass | awk '{ print $1 }' | xargs sudo kill -9")
+            run("ps ax | grep [s]ass | awk '{ print $1 }' | xargs sudo kill -9")
 
 @task
 @roles('vagrant')
 def runserver():
     with settings(warn_only=True):
-        # FOR SOME REASON IF THE PROCESS WASN'T ENDED CORRECTLY, THIS WILL KILL IT
-        run("ps ax | grep [r]unserver | awk '{ print $1 }' | xargs kill -9")
+        with hide('warnings', 'running', 'stderr', 'stdout'):
+            # FOR SOME REASON IF THE PROCESS WASN'T ENDED CORRECTLY, THIS WILL KILL IT
+            run("ps ax | grep [r]unserver | awk '{ print $1 }' | xargs kill -9")
     with cd("/var/www"):
         run('python ./manage.py runserver [::]:8000')
 
@@ -74,8 +83,9 @@ def runserver():
 @roles('vagrant')
 def gunicorn():
     with settings(warn_only=True):
-        # FOR SOME REASON IF THE PROCESS WASN'T ENDED CORRECTLY, THIS WILL KILL IT
-        run("ps ax | grep [r]un_gunicorn | awk '{ print $1 }' | xargs kill -9")
+        with hide('warnings', 'running', 'stderr', 'stdout'):
+            # FOR SOME REASON IF THE PROCESS WASN'T ENDED CORRECTLY, THIS WILL KILL IT
+            run("ps ax | grep [r]un_gunicorn | awk '{ print $1 }' | xargs kill -9")
     with cd("/var/www"):
         run('python ./manage.py run_gunicorn [::]:8000')
 
@@ -83,8 +93,9 @@ def gunicorn():
 @roles('vagrant')
 def celery():
     with settings(warn_only=True):
-        # FOR SOME REASON IF THE PROCESS WASN'T ENDED CORRECTLY, THIS WILL KILL IT
-        run("ps ax | grep [w]orker | awk '{ print $1 }' | xargs kill -9")
+        with hide('warnings', 'running', 'stderr', 'stdout'):
+            # FOR SOME REASON IF THE PROCESS WASN'T ENDED CORRECTLY, THIS WILL KILL IT
+            run("ps ax | grep [w]orker | awk '{ print $1 }' | xargs kill -9")
     with cd("/var/www"):
         run('python manage.py celery worker --loglevel=INFO')
 
@@ -93,8 +104,9 @@ def celery():
 @roles('vagrant')
 def celerybeat():
     with settings(warn_only=True):
-        # FOR SOME REASON IF THE PROCESS WASN'T ENDED CORRECTLY, THIS WILL KILL IT
-        run("ps ax | grep [c]elerybeat | awk '{ print $1 }' | xargs kill -9")
+        with hide('warnings', 'running', 'stderr', 'stdout'):
+            # FOR SOME REASON IF THE PROCESS WASN'T ENDED CORRECTLY, THIS WILL KILL IT
+            run("ps ax | grep [c]elerybeat | awk '{ print $1 }' | xargs kill -9")
     with cd("/var/www"):
         run('python manage.py celerybeat --loglevel=INFO')
 
@@ -172,8 +184,9 @@ def collectstatic(no_input=False, skip_admin=False):
 @roles('vagrant')
 def css_watch(new_config=None):
     with settings(warn_only=True):
-        # Killing all sass processes before executing a new one
-        run("ps ax | grep [c]ompass | awk '{ print $1 }' | xargs sudo kill -9")
+        with hide('warnings', 'running', 'stderr', 'stdout'):
+            # Killing all sass processes before executing a new one
+            run("ps ax | grep [c]ompass | awk '{ print $1 }' | xargs sudo kill -9")
     with cd("/var/www"):
         run(exec_sass_watch.format(base_path, config_path))
 
