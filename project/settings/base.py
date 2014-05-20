@@ -198,6 +198,7 @@ STATICFILES_DIRS = (DEV_STATIC_ROOT,)
 
 # The Site Title of your Admin-Interface. Change this instead of changing index.html
 GRAPPELLI_ADMIN_TITLE = "__PROJECT_NAME__"
+GRAPPELLI_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
