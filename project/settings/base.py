@@ -141,8 +141,13 @@ MEDIA_URL = '/uploads/'
 # A tuple of middleware classes to use
 MIDDLEWARE_CLASSES = (
     # Site Optimization Middleware
+    'utils.cache_headers_middleware.CacheHeadersMiddleware',
     'django.middleware.gzip.GZipMiddleware',
     'django.middleware.http.ConditionalGetMiddleware',
+
+    # Handle proxy redirects
+    #'utils.set_domain_middleware.SetDomainMiddleware',
+    #'utils.slash_redirect_middleware.SlashRedirectMiddleware',
 
     # Common Middleware
     'django.middleware.common.CommonMiddleware',
@@ -199,6 +204,33 @@ STATICFILES_DIRS = (DEV_STATIC_ROOT,)
 # The Site Title of your Admin-Interface. Change this instead of changing index.html
 GRAPPELLI_ADMIN_TITLE = "__PROJECT_NAME__"
 GRAPPELLI_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
+
+# set cache times
+APP_DEFAULT_CACHE = 10 #int(4 * 60 * 60)  # in seconds
+APP_DEFAULT_SHORT_CACHE = 5 #int(15 * 60)  # in seconds
+STATIC_DEFAULT_CACHE = 600 #int(365 * 24 * 60 * 60) # in seconds
+
+
+# AWS settings
+AWS_ACCESS_KEY_ID = os.environ.get('HAUS_AWS_ACCESS_KEY_ID','')
+AWS_SECRET_ACCESS_KEY = os.environ.get('HAUS_AWS_SECRET_ACCESS_KEY','')
+
+AWS_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME = '__BUCKET_NAME__'
+AWS_QUERYSTRING_AUTH = False
+
+
+# AWS settings from https://github.com/etianen/django-herokuapp
+AWS_AUTO_CREATE_BUCKET = False
+AWS_HEADERS = {
+    "Cache-Control": "public, max-age={}".format(STATIC_DEFAULT_CACHE),
+}
+AWS_S3_FILE_OVERWRITE = True
+AWS_S3_SECURE_URLS = USE_HTTPS_FOR_ASSETS
+AWS_S3_URL_PROTOCOL = '' # used to override protocol format, should be 'http:', 'https:' or ''
+AWS_REDUCED_REDUNDANCY = False
+AWS_IS_GZIPPED = True
+AWS_PRELOAD_METADATA = True
+
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
