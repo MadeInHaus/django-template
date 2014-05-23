@@ -1,6 +1,7 @@
 ## Install Fabric
 ```
 easy_install fabric
+easy_install boto
 ```
 
 ## Install VirtualBox
@@ -19,8 +20,9 @@ install package
 vagrant up
 fab vagrant.initdb
 fab vagrant.runserver
-view the site running at: (localhost:8080)[http://localhost:8080/]
 ```
+
+view the site running at: [localhost:8080](http://localhost:8080/)
 
 ## Local Dev settings
 create a file in: 
