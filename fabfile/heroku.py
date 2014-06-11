@@ -19,8 +19,10 @@ __all__ = []
 @task
 def remotes():
     """setup the heroku git remotes per the app_info.json config file"""
-    for env in ('dev', 'staging', 'prod'):
-        local("git remote add {} git@heroku.com:{}.git".format(APP_INFO[env]['heroku_remote_name'], APP_INFO[env]['heroku_app_name']))
+    for env in ('dev', 'staging', 'production'):
+        app_name = APP_INFO[env]['heroku_app_name']
+        if not app_name.startswith('app-name'):
+            local("git remote add {} git@heroku.com:{}.git".format(APP_INFO[env]['heroku_remote_name'],))
 
 def get_hash(env):
     print red("CHECKING OUT BRANCH: {}".format(APP_INFO[env]["branch_name"]))
