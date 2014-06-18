@@ -12,7 +12,7 @@ local_settings.py
 MANIFEST
 .idea
 .vagrant
-celerybeat.pid
+celerybeat*
 *.sw[op]
 collected-static/
 nohup.out
