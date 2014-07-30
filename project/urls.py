@@ -1,13 +1,17 @@
 import os
 
 from django.conf import settings
-from django.conf.urls.defaults import include, patterns, url
-from django.conf.urls.static import static
+from django.conf.urls import include, patterns, url
 from django.contrib import admin
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views.generic import TemplateView
 
+from tastypie.api import Api
+
+
 admin.autodiscover()
+
+v1_api = Api(api_name='v1')
+
 
 urlpatterns = patterns('',
     (r'^grappelli/', include('grappelli.urls')),
@@ -28,6 +32,14 @@ if getattr(settings, 'DEBUG', False):
     urlpatterns += patterns('',
                             (r'^api_profile/v1/(?P<resource>.*)/$', 'utils.api_views.api_profile'),
                             )
+
+if  getattr(settings, 'DEBUG', False) and getattr(settings, 'SHOW_TOOLBAR', False):
+    import debug_toolbar
+    urlpatterns += patterns('',
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    )
+
+
 
 # Homepage catchall needs to go last.
 urlpatterns += patterns('',

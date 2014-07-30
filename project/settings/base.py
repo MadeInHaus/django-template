@@ -28,7 +28,7 @@ USE_HTTPS_FOR_ASSETS = __USE_HTTPS_FOR_ASSETS__
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django_postgrespool',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'django',
         'USER': 'vagrant',
         'PASSWORD': 'vagrant',
@@ -89,7 +89,7 @@ FIXTURE_DIRS = (
 )
 
 # A tuple of strings designating all the enabled applications
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     'grappelli',
     
     'django.contrib.admin',
@@ -104,7 +104,7 @@ INSTALLED_APPS = (
     'django_extensions',
 
     'require',
-    #'debug_toolbar',
+
     'gunicorn',
     'tastypie',
     'djcelery',
@@ -112,7 +112,7 @@ INSTALLED_APPS = (
     
     'utils',
     
-)
+]
 
 # A tuple of IP addresses that see debug comments, when DEBUG is True
 INTERNAL_IPS = ('0.0.0.0', '127.0.0.1',)
@@ -139,7 +139,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 MEDIA_URL = '/uploads/'
 
 # A tuple of middleware classes to use
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE_CLASSES = [
     # Site Optimization Middleware
     'django.middleware.gzip.GZipMiddleware',
     'django.middleware.http.ConditionalGetMiddleware',
@@ -152,13 +152,12 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 
     # Debug
-    #'debug_toolbar.middleware.DebugToolbarMiddleware',
     #'utils.profile_middleware.ProfileMiddleware',
 
     # Basic Auth
     #'utils.basic_auth_middleware.AuthMiddleware',
 
-)
+]
 
 
 APPEND_SLASH = True
@@ -199,7 +198,7 @@ STATICFILES_DIRS = (DEV_STATIC_ROOT,)
 # The Site Title of your Admin-Interface. Change this instead of changing index.html
 GRAPPELLI_ADMIN_TITLE = "__PROJECT_NAME__"
 
-TEMPLATE_CONTEXT_PROCESSORS = (
+TEMPLATE_CONTEXT_PROCESSORS = [
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.debug',
     'django.core.context_processors.i18n',
@@ -209,7 +208,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     'utils.context_processors.global_variables',
 
-)
+]
 
 # Display a detailed report for any TemplateSyntaxError.
 TEMPLATE_DEBUG = DEBUG
@@ -280,28 +279,53 @@ REQUIRE_EXCLUDE = ("build.txt",)
 # The execution environment in which to run r.js: node or rhino.
 REQUIRE_ENVIRONMENT = "node"
 
+SHOW_TOOLBAR = False
+
+if DEBUG and SHOW_TOOLBAR:
+    print "showing toolbar..."
+    MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES + [
+    
+        # Debug
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+        'utils.profile_middleware.ProfileMiddleware',
+    
+    ]
+    
+    INSTALLED_APPS = INSTALLED_APPS + [
+        'debug_toolbar',
+    
+    ]
+
+
+
+
 # Debug toolbar settings
-DEBUG_TOOLBAR_PANELS = (
-    'debug_toolbar.panels.version.VersionDebugPanel',
-    'debug_toolbar.panels.timer.TimerDebugPanel',
-    'debug_toolbar.panels.settings_vars.SettingsVarsDebugPanel',
-    'debug_toolbar.panels.headers.HeaderDebugPanel',
-    'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
-    'debug_toolbar.panels.template.TemplateDebugPanel',
-    'debug_toolbar.panels.sql.SQLDebugPanel',
-    'debug_toolbar.panels.signals.SignalDebugPanel',
-    'debug_toolbar.panels.logger.LoggingPanel',
-)
+DEBUG_TOOLBAR_PANELS = [
+    'debug_toolbar.panels.versions.VersionsPanel',
+    'debug_toolbar.panels.timer.TimerPanel',
+    'debug_toolbar.panels.settings.SettingsPanel',
+    'debug_toolbar.panels.headers.HeadersPanel',
+    'debug_toolbar.panels.request.RequestPanel',
+    'debug_toolbar.panels.sql.SQLPanel',
+    'debug_toolbar.panels.staticfiles.StaticFilesPanel',
+    'debug_toolbar.panels.templates.TemplatesPanel',
+    'debug_toolbar.panels.cache.CachePanel',
+    'debug_toolbar.panels.signals.SignalsPanel',
+    'debug_toolbar.panels.logging.LoggingPanel',
+    'debug_toolbar.panels.redirects.RedirectsPanel',
+]
+
+DEBUG_TOOLBAR_PATCH_SETTINGS = False
 
 def custom_show_toolbar(request):
     return True  # Always show toolbar, for example purposes only.
 
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
-    'SHOW_TOOLBAR_CALLBACK': custom_show_toolbar,
+    'SHOW_TOOLBAR_CALLBACK': 'project.settings.custom_show_toolbar',
     'EXTRA_SIGNALS': [],
     'HIDE_DJANGO_SQL': False,
-    'TAG': 'div',
+    'INSERT_BEFORE': '</body>',
     'ENABLE_STACKTRACES' : True,
 }
 

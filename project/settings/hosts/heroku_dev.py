@@ -23,8 +23,6 @@ DATABASES = {
     'default': dj_database_url.config(default='postgres://localhost'),
 }
 
-DATABASES['default']['ENGINE'] = 'django_postgrespool'
-
 
 # this setting can be set to False after setting up a static file serve through a cdn
 SERVE_STATIC = True
