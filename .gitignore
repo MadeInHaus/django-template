@@ -12,8 +12,7 @@ local_settings.py
 MANIFEST
 .idea
 .vagrant
-celerybeat.pid
-celerybeat-schedule
+celerybeat*
 *.sw[op]
 collected-static/
 nohup.out
@@ -117,3 +116,5 @@ uploads/*
 !uploads/README
 
 routing.js
+project/static/css/*.css
+project/static/img/sprites/icons-*.png

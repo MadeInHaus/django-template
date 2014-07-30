@@ -11,13 +11,13 @@
 		"APP_ENV": "heroku_staging",
 		"heroku_remote_name": "staging",
 		"branch_name": "staging",
-        "s3_bucket": ""
+        	"s3_bucket": ""
 	},
 	"production": {
 		"heroku_app_name": "app-name",
 		"APP_ENV": "heroku",
 		"heroku_remote_name": "production",
 		"branch_name": "master",
-        "s3_bucket": ""
+        	"s3_bucket": ""
 	}
 }
