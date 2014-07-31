@@ -5,7 +5,7 @@ from fabric.context_managers import shell_env
 
 from haus_vars import with_vars
 
-import vagrant, production, dev, staging, s3_copy
+import vagrant, production, dev, staging, s3_copy, s3
 from vagrant import runall, killall, resetdb, resetall, test
 
 env.roledefs       = {

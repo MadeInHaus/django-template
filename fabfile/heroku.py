@@ -1,4 +1,4 @@
-from fabric.api import local, run, cd, abort, lcd
+from fabric.api import local, run, cd, abort, lcd, task
 from fabric.tasks import Task
 from fabric.context_managers import shell_env
 

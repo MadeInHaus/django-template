@@ -1,4 +1,3 @@
-import boto
 from fabric.colors import red, green
 from fabric.api import task
 from time import sleep
@@ -10,6 +9,7 @@ log = logging.getLogger(__name__)
 
 
 def create_buckets(shortname):
+    import boto
     
     conn = boto.connect_s3()
 
@@ -54,6 +54,7 @@ policy = """{{
 }}"""   
 
 def create_user(shortname=None):
+    import boto
 
     conn = boto.connect_iam()
     try:

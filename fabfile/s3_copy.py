@@ -1,4 +1,3 @@
-from boto.s3.connection import S3Connection
 from fabric.decorators import task, roles
 
 from haus_vars import with_vars, APP_INFO, parse_vars
@@ -12,6 +11,7 @@ import cStringIO
 
 
 def copyBucket(srcBucketName, dstBucketName, aws_key, aws_secret, folder_name='uploads'):
+    from boto.s3.connection import S3Connection
     conn = S3Connection(aws_key, aws_secret)
     source = conn.get_bucket(srcBucketName);
     destination = conn.get_bucket(dstBucketName);
@@ -26,6 +26,7 @@ def copyBucket(srcBucketName, dstBucketName, aws_key, aws_secret, folder_name='u
 
 
 def copyBucketDifferentOwners(src_settings, dst_settings, folder_name='uploads'):
+    from boto.s3.connection import S3Connection
     srcBucketName = src_settings['AWS_BUCKET_NAME']
     dstBucketName = dst_settings['AWS_BUCKET_NAME']
     src_conn = S3Connection(src_settings['AWS_ACCESS_KEY_ID'], src_settings['AWS_SECRET_ACCESS_KEY'])
