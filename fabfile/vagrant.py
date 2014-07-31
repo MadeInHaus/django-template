@@ -12,8 +12,7 @@ logging.basicConfig()
 log = logging.getLogger(__name__)
 
 # config....
-use_celery = False
-
+use_celery = False # this should match the USE_CELERY setting in project.settings
 # paths
 base_path   = "./project/static"
 css_path    = base_path + "/css/"

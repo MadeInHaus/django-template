@@ -48,37 +48,6 @@ DATABASE_POOL_ARGS = {
 }
 
 
-# CELERY SETTINGS
-djcelery.setup_loader()
-CELERY_RESULT_BACKEND = 'amqp'
-CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
-
-# REDIS SETTINGS
-REDIS_HOST = os.getenv('REDISTOGO_URL', 'redis://localhost:6379')
-
-# CACHING
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': '127.0.0.1:11211',
-    }
-}
-
-# Never deploy a site into production with DEBUG turned on!
-DEBUG = True
-
-# Address to use for various automated correspondence from the site manager(s).
-DEFAULT_FROM_EMAIL = '__ADMIN_EMAIL__'
-
-# Set the subject prefix for email messages sent to admins and managers
-EMAIL_SUBJECT_PREFIX = '[__PROJECT_NAME__]'
-
-#DEFAULT_FROM_EMAIL = ''
-#EMAIL_HOST = ''
-#EMAIL_HOST_USER = ''
-#EMAIL_HOST_PASSWORD = ''
-#EMAIL_PORT = 587
-#EMAIL_USE_TLS = True
 
 # Maximum size (in bytes) before an upload gets streamed to the file system.
 FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880
@@ -163,6 +132,51 @@ MIDDLEWARE_CLASSES = [
     #'utils.basic_auth_middleware.AuthMiddleware',
 
 ]
+
+
+# CELERY SETTINGS
+USE_CELERY = True
+if USE_CELERY:
+    # We use the database for the message store -- in apps that have more than one celery worker/lots of tasks we should use RabbitMQ or other high performance message queue
+    BROKER_URL = 'django://'
+    CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
+    CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend'
+    djcelery.setup_loader()
+
+    # ADD celery apps 
+    INSTALLED_APPS += [
+                       'djcelery',
+                       'kombu.transport.django',
+                       ]
+
+# REDIS SETTINGS
+REDIS_HOST = os.getenv('REDISTOGO_URL', 'redis://localhost:6379')
+
+# CACHING
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
+
+# Never deploy a site into production with DEBUG turned on!
+DEBUG = True
+
+# Address to use for various automated correspondence from the site manager(s).
+DEFAULT_FROM_EMAIL = 'hausheroku@gmail.com'
+
+# Set the subject prefix for email messages sent to admins and managers
+EMAIL_SUBJECT_PREFIX = '[Update Django Template]'
+
+#DEFAULT_FROM_EMAIL = ''
+#EMAIL_HOST = ''
+#EMAIL_HOST_USER = ''
+#EMAIL_HOST_PASSWORD = ''
+#EMAIL_PORT = 587
+#EMAIL_USE_TLS = True
+
+
 
 
 APPEND_SLASH = True
