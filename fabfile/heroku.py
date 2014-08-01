@@ -132,7 +132,7 @@ def remotes():
     for env in ('dev', 'staging', 'production'):
         app_name = APP_INFO[env]['heroku_app_name']
         if not app_name.startswith('app-name'):
-            local("git remote add {} git@heroku.com:{}.git".format(APP_INFO[env]['heroku_remote_name'],))
+            local("git remote add {} git@heroku.com:{}.git".format(APP_INFO[env]['heroku_remote_name'], app_name))
 
 
 # Fixture Production
