@@ -45,8 +45,8 @@ policy = """{{
                 "arn:aws:s3:::{0}-dev/*",
                 "arn:aws:s3:::{0}-staging",
                 "arn:aws:s3:::{0}-staging/*",
-                "arn:aws:s3:::{0}-prod",
-                "arn:aws:s3:::{0}-prod/*"
+                "arn:aws:s3:::{0}",
+                "arn:aws:s3:::{0}/*"
 
             ]
         }}
