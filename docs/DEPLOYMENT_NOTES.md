@@ -23,7 +23,7 @@ Project specific instructions would be included in this file as well.
 git add .
 git commit -a -m 'initial commit'
 heroku create app-name
-heroku config:set APP_ENV=heroku
+heroku config:set APP_ENV=dev # or staging or production depending on which env you are working on.
 heroku addons:add heroku-postgresql:dev
 heroku pg:promote HEROKU_POSTGRESQL_(use result from last command)
 git push heroku master
@@ -34,32 +34,36 @@ heroku open
 
 # disable collectstatic on heroku, it does not work with require compile anyway
 ```
-$ heroku labs:enable user-env-compile
 $ heroku config:set DISABLE_COLLECTSTATIC=1
 ```
 
 # setup app_info.json
-Each heroku environment must have a corresponding entry in app_info.json.  This config file is responsible for defining the heroku app name, corresponding app_env name and git remote name.
+Each heroku environment must have a corresponding entry in app_info.json.  This config file is responsible for defining the heroku app name, corresponding app_env name and git remote name.  haus-start will fill in some of these values for you.
 
 ```
 {
 	"dev": {
-		"heroku_app_name": "app-name-dev",
-		"APP_ENV": "heroku_dev",
-		"heroku_remote_name": "dev"
+		"heroku_app_name": "'__PROJECT_SHORT_NAME__-dev",
+		"APP_ENV": "dev",
+		"heroku_remote_name": "dev",
+		"branch_name": "dev",
+		"s3_bucket": "__BUCKET_NAME__-dev"
 	},
 	"staging": {
-		"heroku_app_name": "app-name-staging",
-		"APP_ENV": "heroku_staging",
-		"heroku_remote_name": "staging"
+		"heroku_app_name": "'__PROJECT_SHORT_NAME__-staging",
+		"APP_ENV": "staging",
+		"heroku_remote_name": "staging",
+		"branch_name": "staging",
+        	"s3_bucket": "__BUCKET_NAME__-staging"
 	},
-	"prod": {
-		"heroku_app_name": "app-name",
-		"APP_ENV": "heroku",
-		"heroku_remote_name": "production"
+	"production": {
+		"heroku_app_name": "'__PROJECT_SHORT_NAME__",
+		"APP_ENV": "production",
+		"heroku_remote_name": "production",
+		"branch_name": "master",
+        	"s3_bucket": "__BUCKET_NAME__"
 	}
-}
-```
+}```
 
 # experimental deploy process
 [labs-preboot](https://devcenter.heroku.com/articles/labs-preboot/)
