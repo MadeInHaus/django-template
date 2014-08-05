@@ -44,7 +44,7 @@ if  getattr(settings, 'DEBUG', False) and getattr(settings, 'SHOW_TOOLBAR', Fals
 # Homepage catchall needs to go last.
 urlpatterns += patterns('',
     # Homepage
-    (r'^$', TemplateView.as_view(template_name='index.html')),
+    (r'^', TemplateView.as_view(template_name='index.html')),
 )
 
 
