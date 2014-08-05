@@ -41,13 +41,6 @@ SOUTH_DATABASE_ADAPTERS = {
     'default': 'south.db.postgresql_psycopg2'
 }
 
-DATABASE_POOL_ARGS = {
-    'max_overflow': 7,
-    'pool_size': 7,
-    'recycle': 300,
-}
-
-
 
 # Maximum size (in bytes) before an upload gets streamed to the file system.
 FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880
