@@ -71,6 +71,7 @@ def create_user(shortname=None):
         print red('Problem creating user: {}'.format(shortname))
     response = conn.add_user_to_group(shortname, shortname)
     response = conn.create_access_key(shortname)
+    print green('added new account, access key: \n{}'.format(response))
 
     sleep(5) # give the access key a chance to propogate
     create_buckets(shortname=shortname)
