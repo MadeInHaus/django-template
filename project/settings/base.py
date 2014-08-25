@@ -52,6 +52,7 @@ FIXTURE_DIRS = (
 
 # A tuple of strings designating all the enabled applications
 INSTALLED_APPS = [
+    'grappelli.dashboard',
     'grappelli',
     
     'django.contrib.admin',
@@ -210,6 +211,14 @@ STATICFILES_DIRS = (DEV_STATIC_ROOT,)
 # The Site Title of your Admin-Interface. Change this instead of changing index.html
 GRAPPELLI_ADMIN_TITLE = "__PROJECT_NAME__"
 GRAPPELLI_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
+
+
+GRAPPELLI_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
+
+# Tastypie settings
+TASTYPIE_DEFAULT_FORMATS = ['json', ]
+TASTYPIE_API_LIMIT_PER_PAGE = 10000
+
 
 # set cache times
 APP_DEFAULT_CACHE = 10 #int(4 * 60 * 60)  # in seconds

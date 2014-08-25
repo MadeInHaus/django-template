@@ -17,6 +17,8 @@ urlpatterns = patterns('',
     (r'^grappelli/', include('grappelli.urls')),
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^admin/', include(admin.site.urls)),
+    (r'^api/', include(v1_api.urls)),
+
 )
 
 # Used to show static assets out of the collected-static and user media out of the uploads directory.
