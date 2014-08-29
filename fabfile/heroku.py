@@ -46,6 +46,7 @@ def current_asset_version(env, ):
 
 
 class CustomTask(Task):
+    '''Creates a task from a task with the ability to set default arguments and env var'''
     roles = ['vagrant']
     
     def __init__(self, func, env, *args, **kwargs):
@@ -54,8 +55,10 @@ class CustomTask(Task):
         self.env = env
         self.name = func.__name__
         self.__doc__ = func.__doc__
+        self.default_args = kwargs
 
     def run(self, *args, **kwargs):
+        kwargs.update(self.default_args)
         if 'env' not in kwargs:
             kwargs['env'] = self.env
         return self.func(*args, **kwargs)
@@ -63,6 +66,7 @@ class CustomTask(Task):
 
 
 def deploy(env=None, quick=True):
+    # ensure quick=='False' is properly handled
     if str(quick).lower() == 'false':
         quick = False
 
