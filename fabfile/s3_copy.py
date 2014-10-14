@@ -65,7 +65,14 @@ def update_uploads(src_env='staging', dst_env='dev', different_owners=False):
     dst = dst_settings['AWS_BUCKET_NAME']
     folder = 'uploads'
 
-    if 'production' in [src_env, dst_env]:
+
+    owners = {
+              'dev': 1,
+              'staging': 1,
+              'production': 1,
+              }
+
+    if owners[src_env] != owners[dst_env]:
         copyBucketDifferentOwners(src_settings, dst_settings, folder)
     else:
         copyBucket(src, dst, src_settings['AWS_ACCESS_KEY_ID'], src_settings['AWS_SECRET_ACCESS_KEY'], folder)
