@@ -54,7 +54,7 @@ def copyBucketDifferentOwners(src_settings, dst_settings, folder_name='uploads')
 @roles('vagrant')
 def update_uploads(src_env='staging', dst_env='dev', different_owners=False):
     """copies the uploads folder from src_env to dst_env s3 buckets, pass different_owners=True to copy between s3 buckets that belong to different accounts"""
-    different_owners = str(diffrent_owners).lowercase() == 'true'
+    different_owners = str(different_owners).lowercase() == 'true'
     print "{}".format(APP_INFO)
     src_app_env = APP_INFO[src_env]['APP_ENV']
     dst_app_env = APP_INFO[dst_env]['APP_ENV']
