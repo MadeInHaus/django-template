@@ -289,7 +289,8 @@ USE_L10N = False
 USE_TZ = True
 
 # Testing
-TEST_RUNNER = 'testing.TestRunner'
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+
 
 # Which settings are passed by RequestContext to the templates
 # Keep this list small, as it is passed to each request.
