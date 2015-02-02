@@ -1,7 +1,6 @@
 # Deployment Notes
 
 ## existing project
-# Deployment Notes
 
 Deployments require proper setup of git remotes and a working development environment in order to compile production CSS and JS files and push these files to the right servers.
 
