@@ -21,9 +21,11 @@ install package
 ## Initialize and start server
 ```
 vagrant up
-fab vagrant.initdb
-fab vagrant.runserver
+fab resetdb
+fab runall
 ```
+
+* note `fab resetdb` only needs to be run the first time the server is run (or whenever the database should be returned to the inital state).
 
 view the site running at: [localhost:8080](http://localhost:8080/)
 
@@ -31,7 +33,7 @@ view the site running at: [localhost:8080](http://localhost:8080/)
 ## Heroku setup
 - install heroku [toolbelt](https://toolbelt.heroku.com/)
 - be sure to login and generate a new key if prompted `heroku login`
-- add remotes for app,  based on the heroku app names which can be found in app_info.json in the project root:
+- add remotes for app environments using this command:
 ```
 fab remotes
 ```
