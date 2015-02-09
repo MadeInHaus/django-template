@@ -85,7 +85,7 @@ def update_fixture(src_env='staging', dst_env='dev', do_update_uploads=True, *ar
         do_update_uploads = False
     execute(create_fixture_on_s3, env=src_env)
     execute(grab_fixture_on_s3, env=src_env)
-    if update_uploads:
+    if do_update_uploads:
         execute(update_uploads, src_env=src_env, dst_env=dst_env)
 
 
