@@ -1,6 +1,6 @@
-from fabric.api import local, run, cd, abort, lcd, task
+from fabric.api import local, run, cd, lcd, task
 from fabric.tasks import Task
-from fabric.context_managers import shell_env, settings
+from fabric.context_managers import settings
 
 from vagrant import collectstatic, css_compile, killall
 from fabric.colors import red, green, yellow
