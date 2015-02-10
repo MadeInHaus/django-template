@@ -7,6 +7,8 @@ from django.views.generic import TemplateView
 
 from tastypie.api import Api
 
+from utils.s3proxy import S3ProxyView
+
 
 admin.autodiscover()
 
@@ -23,11 +25,20 @@ urlpatterns = patterns('',
 
 # Used to show static assets out of the collected-static and user media out of the uploads directory.
 # Note this must be turned of with SERVE_STATIC var in settings.py
-if getattr(settings, 'SERVE_STATIC', False) and settings.SERVE_STATIC:
+# Used to show static assets out of the collected-static and user media out of the uploads directory.
+# Note this must be turned of with SERVE_STATIC var in settings.py
+if getattr(settings, 'SERVE_STATIC', False):
     urlpatterns += patterns('',
-        url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT, 'show_indexes': False,}),
-        url(r'^uploads/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': False,}),
+        url(r'^static/(?P<path>.*)$', S3ProxyView.as_view(), {'request_path': '/static/', 'bucket_path': '/static/'}),
+        url(r'^uploads/(?P<path>.*)$', S3ProxyView.as_view(), {'request_path': '/uploads/', 'bucket_path': '/uploads/'}),
     )
+
+# Serve from local folders
+# if getattr(settings, 'SERVE_STATIC', False) and settings.SERVE_STATIC:
+#     urlpatterns += patterns('',
+#         url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT, 'show_indexes': False,}),
+#         url(r'^uploads/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': False,}),
+#     )
     
 # api profile view for tastypie endpoints
 if getattr(settings, 'DEBUG', False):
