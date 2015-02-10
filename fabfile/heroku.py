@@ -1,6 +1,6 @@
 from fabric.api import local, run, cd, abort, lcd, task
 from fabric.tasks import Task
-from fabric.context_managers import shell_env
+from fabric.context_managers import shell_env, settings
 
 from vagrant import collectstatic, css_compile, killall
 from fabric.colors import red, green, yellow
@@ -10,6 +10,10 @@ from haus_vars import with_vars, APP_INFO
 from os import path
 
 import logging
+import urllib2
+import json
+import subprocess
+
 logging.basicConfig()
 log = logging.getLogger(__name__)
 
@@ -71,6 +75,7 @@ def deploy(env=None, quick=True):
         quick = False
 
     """Deploy static and source to heroku environment"""
+    notify_slack(env=env)
     version = get_heroku_asset_version(env) if quick else current_asset_version(env=env)
     compile_env_css(env=env, asset_version=version)
     deploy_static_media(env=env, asset_version=version, quick=quick)
@@ -117,7 +122,6 @@ def sync_prod_db(env=None, reset_db=False, haus_vars={}):
         # note that this is destructive of the PROD DB
         #local('heroku pg:reset DATABASE_URL') #add "--confirm haus" to remove required input
         pass
-    local('heroku run ./manage.py syncdb -a {}'.format(APP_INFO[env]["heroku_app_name"]))
     local('heroku run ./manage.py migrate -a {}'.format(APP_INFO[env]["heroku_app_name"]))
 
 @with_vars
@@ -133,10 +137,12 @@ def compile_env_css(env=None, asset_version='', haus_vars={}):
 @task
 def remotes():
     """setup the heroku git remotes per the app_info.json config file"""
+    # heroku env remotes
     for env in ('dev', 'staging', 'production'):
         app_name = APP_INFO[env]['heroku_app_name']
         if not app_name.startswith('app-name'):
-            local("git remote add {} git@heroku.com:{}.git".format(APP_INFO[env]['heroku_remote_name'], app_name))
+            with settings(warn_only=True): 
+                local("git remote add {} git@heroku.com:{}.git".format(APP_INFO[env]['heroku_remote_name'], app_name))
 
 
 # Fixture Production
@@ -160,5 +166,25 @@ def grab_fixture_on_s3(env=None, haus_vars={}):
 def apply_fixture(env=None, haus_vars={}):
     local('heroku run ./manage.py loaddata project/fixtures/local_data.json -a {}'.format(APP_INFO[env]["heroku_app_name"]))
 
+
+# Notify Slack
+# ------------------
+
+@with_vars
+def notify_slack(env=None, haus_vars={}):
+    slack_webhook_token =  APP_INFO[env].get("slack_webhook_token")
+    if slack_webhook_token:
+        slack_url = "https://haus.slack.com/services/hooks/incoming-webhook?token={}".format(slack_webhook_token)
+        try:
+            name = subprocess.check_output(['git', 'config', 'user.name']).strip()
+        except:
+            name = 'unknown'
+        slack_message = "credits rolling on: {} as requested by {} :crocodile:".format(APP_INFO[env]["heroku_app_name"], name)
+        payload={
+            "username": "deployerbot",
+            "text": slack_message
+        }
+        req = urllib2.Request(slack_url, json.dumps(payload))
+        urllib2.urlopen(req)
 
 

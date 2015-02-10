@@ -1,5 +1,5 @@
 from os import path
-from fabric.api import local, cd, lcd, env, roles, execute, task, run, \
+from fabric.api import local, cd, lcd, roles, execute, task, run, \
                        settings, abort, hide
 from fabric.colors import yellow
 
@@ -32,7 +32,7 @@ def test_vagrant():
     with cd('/var/www'):
         remote_md5 = run('md5sum README.md').split()[0]
     if not local_md5 == remote_md5:
-        abort('VM does not match,  another VM running?')
+        abort('VM does not match,  another VM running? got local: {} and remote: {}'.format(local_md5, remote_md5))
 
 
 @task
@@ -49,7 +49,8 @@ def runall():
     if use_celery:
         local('nohup fab vagrant.celery &')
         local('nohup fab vagrant.celerybeat &')
-    local('nohup fab vagrant.css_watch &')
+    local('fab vagrant.css_watch_halt')
+    local('nohup fab vagrant.css_watch_ &')
     local('nohup fab vagrant.runserver &')
     local('tail -f nohup.out')
 
@@ -86,7 +87,7 @@ def gunicorn():
             # FOR SOME REASON IF THE PROCESS WASN'T ENDED CORRECTLY, THIS WILL KILL IT
             run("ps ax | grep [r]un_gunicorn | awk '{ print $1 }' | xargs kill -9")
     with cd("/var/www"):
-        run('python ./manage.py run_gunicorn [::]:8000')
+        run('gunicorn project.wsgi::application [::]:8000')
 
 @task
 @roles('vagrant')
@@ -96,7 +97,7 @@ def celery():
             # FOR SOME REASON IF THE PROCESS WASN'T ENDED CORRECTLY, THIS WILL KILL IT
             run("ps ax | grep [w]orker | awk '{ print $1 }' | xargs kill -9")
     with cd("/var/www"):
-        run('python manage.py celery worker --loglevel=INFO')
+        run('python manage.py celery worker --loglevel=DEBUG')
 
 
 @task
@@ -126,7 +127,6 @@ def initdb(load_images=False):
 @roles('vagrant')
 def syncdb():
     with cd("/var/www"):
-        run('python manage.py syncdb')
         run('python manage.py migrate')
 
 @task
@@ -181,11 +181,12 @@ def collectstatic(no_input=False, skip_admin=False):
 
 @task
 @roles('vagrant')
-def css_watch(new_config=None):
+def css_watch():
     with settings(warn_only=True):
         with hide('warnings', 'running', 'stderr', 'stdout'):
             # Killing all sass processes before executing a new one
             run("ps ax | grep [c]ompass | awk '{ print $1 }' | xargs sudo kill -9")
+
     with cd("/var/www"):
         run(exec_sass_watch.format(base_path, config_path))
 

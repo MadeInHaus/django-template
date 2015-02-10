@@ -1,6 +1,6 @@
 from fabric.decorators import task, roles
 
-from haus_vars import with_vars, APP_INFO, parse_vars
+from haus_vars import APP_INFO, parse_vars
 from fabric.api import run, execute
 from fabric.context_managers import cd
 
@@ -54,7 +54,8 @@ def copyBucketDifferentOwners(src_settings, dst_settings, folder_name='uploads')
 @roles('vagrant')
 def update_uploads(src_env='staging', dst_env='dev', different_owners=False):
     """copies the uploads folder from src_env to dst_env s3 buckets, pass different_owners=True to copy between s3 buckets that belong to different accounts"""
-    different_owners = str(different_owners).lowercase() == 'true'
+    print "UPDATING UPLOADS...."
+    different_owners = str(different_owners).lower() == 'true'
     print "{}".format(APP_INFO)
     src_app_env = APP_INFO[src_env]['APP_ENV']
     dst_app_env = APP_INFO[dst_env]['APP_ENV']
@@ -65,17 +66,17 @@ def update_uploads(src_env='staging', dst_env='dev', different_owners=False):
     dst = dst_settings['AWS_BUCKET_NAME']
     folder = 'uploads'
 
-
     owners = {
               'dev': 1,
               'staging': 1,
               'production': 1,
               }
 
-    if owners[src_env] != owners[dst_env]:
+    if different_owners or owners[src_env] != owners[dst_env]:
         copyBucketDifferentOwners(src_settings, dst_settings, folder)
     else:
         copyBucket(src, dst, src_settings['AWS_ACCESS_KEY_ID'], src_settings['AWS_SECRET_ACCESS_KEY'], folder)
+
 
 @task
 @roles('vagrant')
