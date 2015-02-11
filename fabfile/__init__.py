@@ -12,6 +12,7 @@ from vagrant import runall, killall, resetdb, resetall, test
 env.roledefs       = {
                       'vagrant'                : ['vagrant@127.0.0.1:2222']
                      }
+
 env.passwords      = {
                       'vagrant@127.0.0.1:2222'      :'vagrant',
                      }

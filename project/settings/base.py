@@ -24,7 +24,7 @@ SERVER_EMAIL = 'donotreply@madeinhaus.com'
 EMAIL_SUBJECT_PREFIX = '[__PROJECT_SHORT_NAME__] '
 
 # setting for using HTTPS or HTTP protocol for serving assets
-USE_HTTPS_FOR_ASSETS = __USE_HTTPS_FOR_ASSETS__
+USE_HTTPS_FOR_ASSETS = __USE_HTTPS_FOR_ASSETS__  # @UndefinedVariable
 
 DATABASES = {
     'default': {

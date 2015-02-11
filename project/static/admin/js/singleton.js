@@ -5,4 +5,4 @@ function f() {
 	}
 };
 
-django.jQuery(document).ready(f)
+django.jQuery(document).ready(f);
