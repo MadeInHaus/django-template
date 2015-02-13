@@ -131,12 +131,13 @@ def concatenate_files(start):
     shutil.rmtree(start)
 
 def after_copy(no_prompt=False, no_git=False):
+    print "STARTING AFTER COPY"
     if not no_git:
         init_git()
 
     # Replace variables with prompt values or defaults
     replace = get_replace_vars(no_prompt=no_prompt)
-    replace_vars(replace, 'defaults', 'project')
+    replace_vars(replace, '.')
     set_executables(os.getcwd())
     # Copy in default files
     concatenate_files('defaults')
