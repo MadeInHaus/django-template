@@ -70,8 +70,6 @@ INSTALLED_APPS = [
 
     'gunicorn',
     'tastypie',
-    'djcelery',
-    'south',
     
     'utils',
     
