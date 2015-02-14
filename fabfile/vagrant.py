@@ -12,16 +12,9 @@ logging.basicConfig()
 log = logging.getLogger(__name__)
 
 # config....
-use_celery = False # this should match the USE_CELERY setting in project.settings
-# paths
-base_path   = "./project/static"
-css_path    = base_path + "/css/"
-config_path = css_path + "config.rb"
+USE_CELERY = False # this should match the USE_CELERY setting in project.settings
+USE_GULP = True
 
-
-# sass execs
-exec_sass_watch   = "compass watch --poll {} -c {}"
-exec_sass_compile = "compass compile {} -c {} --trace --force"
 
 
 
@@ -46,11 +39,11 @@ def env_test(*args, **kwargs):
 def runall():
     execute(test_vagrant)
     local('touch nohup.out')
-    if use_celery:
+    if USE_CELERY:
         local('nohup fab vagrant.celery &')
         local('nohup fab vagrant.celerybeat &')
-    local('fab vagrant.css_watch_halt')
-    local('nohup fab vagrant.css_watch_ &')
+    if USE_GULP:
+        local('nohup fab vagrant.rungulp &')
     local('nohup fab vagrant.runserver &')
     local('tail -f nohup.out')
 
@@ -63,7 +56,7 @@ def killall():
         with hide('warnings', 'running', 'stderr', 'stdout'):
             run("ps ax | grep [r]unserver | awk '{ print $1 }' | xargs sudo kill -9")
             run("ps ax | grep [r]un_gunicorn | awk '{ print $1 }' | xargs sudo kill -9")
-            if use_celery:
+            if USE_CELERY:
                 run("ps ax | grep [w]orker | awk '{ print $1 }' | xargs sudo kill -9")
                 run("ps ax | grep [c]elerybeat | awk '{ print $1 }' | xargs sudo kill -9")
             run("ps ax | grep [c]ompass | awk '{ print $1 }' | xargs sudo kill -9")
@@ -76,8 +69,17 @@ def runserver():
         with hide('warnings', 'running', 'stderr', 'stdout'):
             # FOR SOME REASON IF THE PROCESS WASN'T ENDED CORRECTLY, THIS WILL KILL IT
             run("ps ax | grep [r]unserver | awk '{ print $1 }' | xargs kill -9")
-    with cd("/var/www"):
+    with cd("/var/www/"):
         run('python ./manage.py runserver [::]:8000')
+
+@task
+@roles('vagrant')
+def rungulp():
+    with settings(warn_only=True):
+        with hide('warnings', 'running', 'stderr', 'stdout'):
+            local("pkill gulp")
+        with lcd('frontend'):
+            local('gulp')
 
 @task
 @roles('vagrant')
@@ -179,16 +181,6 @@ def collectstatic(no_input=False, skip_admin=False):
     with cd("/var/www"):
         run('python manage.py collectstatic {} {}'.format('--noinput' if no_input else '', '-i "admin*" -i "grappelli*"' if skip_admin else ''))
 
-@task
-@roles('vagrant')
-def css_watch():
-    with settings(warn_only=True):
-        with hide('warnings', 'running', 'stderr', 'stdout'):
-            # Killing all sass processes before executing a new one
-            run("ps ax | grep [c]ompass | awk '{ print $1 }' | xargs sudo kill -9")
-
-    with cd("/var/www"):
-        run(exec_sass_watch.format(base_path, config_path))
 
 @task
 @roles('vagrant')
@@ -200,11 +192,6 @@ def pipinstall():
 def freeze():
     run('/home/vagrant/.venv/bin/pip freeze > /var/www/current-requirements.txt')
 
-@task
-@roles('vagrant')
-def css_compile():
-    with cd("/var/www"):
-        run(exec_sass_compile.format(base_path, config_path))
 
 @task
 @roles('vagrant')

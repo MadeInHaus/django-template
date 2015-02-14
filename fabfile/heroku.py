@@ -2,7 +2,7 @@ from fabric.api import local, run, cd, lcd, task
 from fabric.tasks import Task
 from fabric.context_managers import settings
 
-from vagrant import collectstatic, css_compile, killall
+from vagrant import collectstatic, killall
 from fabric.colors import red, green, yellow
 
 from haus_vars import with_vars, APP_INFO
@@ -77,7 +77,6 @@ def deploy(env=None, quick=True):
     """Deploy static and source to heroku environment"""
     notify_slack(env=env)
     version = get_heroku_asset_version(env) if quick else current_asset_version(env=env)
-    compile_env_css(env=env, asset_version=version)
     deploy_static_media(env=env, asset_version=version, quick=quick)
     deploy_maintenance_pages(env=env, asset_version=version, quick=quick)
     deploy_source(env=env, asset_version=version, quick=quick)
@@ -123,13 +122,6 @@ def sync_prod_db(env=None, reset_db=False, haus_vars={}):
         #local('heroku pg:reset DATABASE_URL') #add "--confirm haus" to remove required input
         pass
     local('heroku run ./manage.py migrate -a {}'.format(APP_INFO[env]["heroku_app_name"]))
-
-@with_vars
-def compile_env_css(env=None, asset_version='', haus_vars={}):
-    log.warning(red('Calling killall,  all process will be killed!'))
-    killall()
-    css_compile()
-    log.warning(red('Note killall was called so vagrant server/compass will be down'))
 
 
 # Project setup
