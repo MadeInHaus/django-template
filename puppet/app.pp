@@ -17,7 +17,6 @@ node default{
     include app::pipreq
     include app::memcache
     include app::node
-    include app::sass
     
 }
 
