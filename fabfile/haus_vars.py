@@ -18,10 +18,9 @@ BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../'))
 
 # Load/parse app_info.json
 try:
-    APP_INFO = load(open(os.path.join(BASE_DIR, "app_info.json")))
+    APP_INFO = load(open(os.path.join(BASE_DIR, "backend/app_info.json")))
 except:
-    print red("Failed to load app_info.json")
-    abort()
+    abort(red("Failed to load app_info.json"))
 
 # suppress tasks
 __all__ = []

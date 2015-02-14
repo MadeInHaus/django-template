@@ -7,7 +7,7 @@ from haus_vars import with_vars
 from heroku import remotes
 
 import vagrant, production, dev, staging, s3_copy, s3
-from vagrant import runall, killall, resetdb, resetall, test
+from vagrant import runall, killall, resetdb, resetall, test, rungulp
 
 env.roledefs       = {
                       'vagrant'                : ['vagrant@127.0.0.1:2222']

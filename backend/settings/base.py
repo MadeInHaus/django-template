@@ -54,7 +54,7 @@ FIXTURE_DIRS = (
 INSTALLED_APPS = [
     'grappelli.dashboard',
     'grappelli',
-    
+
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.auth',
@@ -70,8 +70,6 @@ INSTALLED_APPS = [
 
     'gunicorn',
     'tastypie',
-    'djcelery',
-    'south',
     
     'utils',
     
@@ -129,7 +127,7 @@ MIDDLEWARE_CLASSES = [
 
 
 # CELERY SETTINGS
-USE_CELERY = True
+USE_CELERY = False
 if USE_CELERY:
     # We use the database for the message store -- in apps that have more than one celery worker/lots of tasks we should use RabbitMQ or other high performance message queue
     BROKER_URL = 'django://'
