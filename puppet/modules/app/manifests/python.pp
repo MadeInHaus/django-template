@@ -5,6 +5,7 @@ class app::python {
     'python-dev',
     'python-pip',
     'python-virtualenv',
+    'libmemcached-dev',
     ]
 
     package { $packageList: }
