@@ -106,9 +106,16 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.gzip.GZipMiddleware',
     'django.middleware.http.ConditionalGetMiddleware',
 
+    # Basic Auth
+    #'utils.basic_auth_middleware.AuthMiddleware',
+
+
     # Handle proxy redirects
     #'utils.set_domain_middleware.SetDomainMiddleware',
     #'utils.slash_redirect_middleware.SlashRedirectMiddleware',
+
+    # Cache tastypie list views
+    #'apps.utils.list_view_cache_middleware.CacheSetListView',
 
     # Common Middleware
     'django.middleware.common.CommonMiddleware',
@@ -120,8 +127,9 @@ MIDDLEWARE_CLASSES = [
     # Debug
     #'utils.profile_middleware.ProfileMiddleware',
 
-    # Basic Auth
-    #'utils.basic_auth_middleware.AuthMiddleware',
+    # Cache tastypie list views
+    #'apps.utils.list_view_cache_middleware.CacheGetListView',
+
 
 ]
 
