@@ -1,6 +1,6 @@
 from django.shortcuts import render_to_response
 # Import the tastypie.api.Api object with which your api resources are registered. 
-from project.urls import v1_api as api
+from backend.urls import v1_api as api
 
 def api_profile(request, resource):
     """ Allows easy profiling of API requests with django-debug-toolbar. """

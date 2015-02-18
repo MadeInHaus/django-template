@@ -378,7 +378,7 @@ def custom_show_toolbar(request):
 
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
-    'SHOW_TOOLBAR_CALLBACK': 'project.settings.custom_show_toolbar',
+    'SHOW_TOOLBAR_CALLBACK': 'backend.settings.custom_show_toolbar',
     'EXTRA_SIGNALS': [],
     'HIDE_DJANGO_SQL': False,
     'INSERT_BEFORE': '</body>',

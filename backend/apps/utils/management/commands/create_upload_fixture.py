@@ -30,7 +30,7 @@ class Command(BaseCommand):
         self.stdout.write('Using bucket: {}'.format(AWS_BUCKET_NAME))
 
         BASE_DIR = settings.BASE_DIR
-        fixtures_dir = os.path.abspath(os.path.join(BASE_DIR, 'project', 'fixtures'))
+        fixtures_dir = os.path.abspath(os.path.join(BASE_DIR, 'backend', 'fixtures'))
 
         fixture_name = os.path.join(fixtures_dir, 'local_data.json')
 
