@@ -1,6 +1,6 @@
 class app::node{
 	class { 'nodejs':
-		version => 'v12.0.0',
+		version => 'v0.12.0',
 	}
 
     package { 'grunt-cli':
