@@ -5,12 +5,8 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  # All Vagrant configuration is done here. The most common configuration
-  # options are documented and commented below. For a complete reference,
-  # please see the online documentation at vagrantup.com.
   config.vm.hostname = "vagrant.madeinhaus.com"
 
-  # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "haus-box-v2"
   config.vm.box_url = "http://s3.amazonaws.com/haus_backend_utility/haus-box-v2.box"
 
@@ -24,7 +20,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # accessing "localhost:8080" will access port 80 on the guest machine.
   # config.vm.network "forwarded_port", guest: 80, host: 8080
 
-
   #Redis
   #config.vm.network "forwarded_port", guest: 6379, host: 6378
 
@@ -33,7 +28,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   #Django
   config.vm.network "forwarded_port", guest: 8000, host: 8080
-
 
 
   # Create a private network, which allows host-only access to the machine
@@ -55,7 +49,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
 
-  #config.vm.synced_folder "project", "/var/www", "./"
   config.vm.synced_folder "./", "/var/www"
 
 
