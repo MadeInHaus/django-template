@@ -6,7 +6,7 @@ Vagrant::Config.run do |config|
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
-  config.vm.hostname = "vagrant.madeinhaus.com"
+  config.vm.host_name = "vagrant.madeinhaus.com"
 
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "haus-box-v2"
