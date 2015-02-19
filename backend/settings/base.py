@@ -138,6 +138,12 @@ MIDDLEWARE_CLASSES = [
 USE_CELERY = False
 if USE_CELERY:
     # We use the database for the message store -- in apps that have more than one celery worker/lots of tasks we should use RabbitMQ or other high performance message queue
+
+    # RabbitMQ seetings:
+#     BROKER_URL = 'amqp://guest:guest@localhost:5672/'
+#     CELERY_RESULT_BACKEND = 'amqp://'
+
+    
     BROKER_URL = 'django://'
     CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
     CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend'
