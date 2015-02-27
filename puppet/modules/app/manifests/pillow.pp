@@ -1,8 +1,11 @@
 class app::pillow {
 
     $packageList = [
+    'gifsicle',
+    'optipng',
     'libtiff4-dev',
-    'libjpeg62-dev',
+    'libjpeg-dev',
+    'libjpeg-progs',
     'zlib1g-dev',
     'libfreetype6-dev',
     'liblcms1-dev',
@@ -12,6 +15,10 @@ class app::pillow {
 
     package { $packageList: }
 
+   package { 'svgo':
+      ensure => present,
+      provider => 'npm'
+   }
     
 }
 
