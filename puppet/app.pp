@@ -5,7 +5,7 @@ node default{
     stage { last: require => Stage[main] }
     
     include app
-    # include app::rabbitmq
+    include app::rabbitmq
     include app::redis
     include app::python
     include app::pillow
