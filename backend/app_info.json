@@ -1,23 +1,26 @@
 {
-	"dev": {
-		"heroku_app_name": "'__PROJECT_SHORT_NAME__-dev",
-		"APP_ENV": "dev",
-		"heroku_remote_name": "dev",
-		"branch_name": "dev",
-		"s3_bucket": "__BUCKET_NAME__-dev"
-	},
-	"staging": {
-		"heroku_app_name": "'__PROJECT_SHORT_NAME__-staging",
-		"APP_ENV": "staging",
-		"heroku_remote_name": "staging",
-		"branch_name": "staging",
-        	"s3_bucket": "__BUCKET_NAME__-staging"
-	},
-	"production": {
-		"heroku_app_name": "'__PROJECT_SHORT_NAME__",
-		"APP_ENV": "production",
-		"heroku_remote_name": "production",
-		"branch_name": "master",
-        	"s3_bucket": "__BUCKET_NAME__"
-	}
+    "dev": {
+        "project_name": "__PROJECT_SHORT_NAME__",
+        "heroku_app_name": "__PROJECT_SHORT_NAME__-dev",
+        "APP_ENV": "dev",
+        "heroku_remote_name": "dev",
+        "branch_name": "dev",
+        "s3_bucket": "__BUCKET_NAME__"
+    },
+    "staging": {
+        "project_name": "__PROJECT_SHORT_NAME__",
+        "heroku_app_name": "__PROJECT_SHORT_NAME__-staging",
+        "APP_ENV": "staging",
+        "heroku_remote_name": "staging",
+        "branch_name": "staging",
+        "s3_bucket": "__BUCKET_NAME__"
+    },
+    "production": {
+        "project_name": "__PROJECT_SHORT_NAME__",
+        "heroku_app_name": "__PROJECT_SHORT_NAME__",
+        "APP_ENV": "production",
+        "heroku_remote_name": "production",
+        "branch_name": "master",
+        "s3_bucket": "__BUCKET_NAME__"
+    }
 }

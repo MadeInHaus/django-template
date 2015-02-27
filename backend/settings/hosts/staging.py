@@ -11,12 +11,17 @@ DEBUG = False
 print >> sys.stderr, "Using Heroku Settings"
 
 try:
-    APP_INFO = load(open(BASE_DIR + "/app_info.json"))['prod']
+    APP_INFO = load(open(BASE_DIR + "/app_info.json"))['staging']
 except:
     print "Failed to load app_info.json"
     APP_INFO = {}
 
 print "using appinfo: ", APP_INFO
+
+if APP_INFO.get('project_name') and APP_INFO.get('branch_name'):
+    STATIC_PREPEND_PATH = '/{}/{}'.format(APP_INFO.get('project_name'), APP_INFO.get('branch_name'))
+else:
+    STATIC_PREPEND_PATH = ''
 
 
 DATABASES = {
@@ -36,14 +41,20 @@ AWS_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME = '__BUCKET_NAME__-staging'
 # suppress bucket auth via accesskeys
 AWS_QUERYSTRING_AUTH = False
 
-STATICFILES_STORAGE = 'utils.storage.OptimizedS3BotoStorage'
-DEFAULT_FILE_STORAGE = "utils.storage.MediaRootS3BotoStorage"
-
 ASSET_PROTOCOL = 'https' if USE_HTTPS_FOR_ASSETS else 'http'
 
-STATIC_URL = '{}://s3.amazonaws.com/{}/'.format(ASSET_PROTOCOL, AWS_STORAGE_BUCKET_NAME)
-MEDIA_URL = '{}://s3.amazonaws.com/{}/uploads/'.format(ASSET_PROTOCOL, AWS_STORAGE_BUCKET_NAME)
+USE_RELATIVE_STATIC_URL = os.environ.get('USE_RELATIVE_STATIC_URL', False)
 
-INSTALLED_APPS += ('storages',)
+if USE_RELATIVE_STATIC_URL:
+    STATIC_URL = '/'
+    MEDIA_URL = '/uploads/'
+else:
+    STATIC_URL = '{}://s3.amazonaws.com/{}/'.format(ASSET_PROTOCOL, AWS_STORAGE_BUCKET_NAME)
+    MEDIA_URL = '{}://s3.amazonaws.com/{}/uploads/'.format(ASSET_PROTOCOL, AWS_STORAGE_BUCKET_NAME)
+
+    STATICFILES_STORAGE = 'utils.storage.OptimizedS3BotoStorage'
+    DEFAULT_FILE_STORAGE = "utils.storage.MediaRootS3BotoStorage"
+
+    INSTALLED_APPS += ('storages',)
 
 ALLOWED_HOSTS += ('{}.herokuapp.com'.format(APP_INFO.get('heroku_app_name','')), )

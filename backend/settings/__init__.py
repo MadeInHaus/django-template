@@ -97,7 +97,17 @@ PERM_STATIC_URL = STATIC_URL
 
 # Include Asset Version in STATIC_URL
 ASSET_VERSION = os.environ.get("ASSET_VERSION", None)
+
+try:
+    AWS_LOCATION = STATIC_PREPEND_PATH
+except:
+    AWS_LOCATION = ''
+
 if ASSET_VERSION:
-    AWS_LOCATION = 'static/%s/' % ASSET_VERSION # set path of assets in s3 bucket, note this is '' by default
-    STATIC_URL += AWS_LOCATION
+    AWS_LOCATION += 'static/%s/' % ASSET_VERSION # set path of assets in s3 bucket, note this is '' by default
+else:
+    AWS_LOCATION += 'static/'
+
+STATIC_URL += AWS_LOCATION
+
 
