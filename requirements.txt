@@ -23,7 +23,7 @@ gnureadline==6.3.3
 greenlet==0.4.2
 gunicorn==19.1.0
 ipython==2.1.0
-kombu==3.0.24
+kombu==3.0.35
 logilab-astng==0.24.3
 logilab-common==0.62.0
 mimeparse==0.1.3
