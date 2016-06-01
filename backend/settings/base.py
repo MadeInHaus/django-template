@@ -29,11 +29,10 @@ USE_HTTPS_FOR_ASSETS = __USE_HTTPS_FOR_ASSETS__  # @UndefinedVariable
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'django',
-        'USER': 'vagrant',
-        'PASSWORD': 'vagrant',
-        'HOST': '',
-        'PORT': '',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'HOST': 'db',
+        'PORT': 5432,
     }
 }
 
