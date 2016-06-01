@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+    web:
+        extends:
+            file: docker-compose.common.yml
+            service: web
+        volumes:
+            - .:/usr/src/app
+        depends_on:
+            - db
+    db:
+        extends:
+            file: docker-compose.common.yml
+            service: db
