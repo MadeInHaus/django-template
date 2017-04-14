@@ -66,13 +66,6 @@ def get_replace_vars(no_prompt=False):
     )
     replace = {}
 
-    # Take defaults from frontend package if available
-    if os.path.exists('package.json'):
-        with open('package.json') as fp:
-            j = json.load(fp)
-            config = j.get('config', {})
-            defaults.update(config.get('vars', {}))
-
     for info in defaults:
         var = info['var_name']
         default = info['default']
