@@ -1,26 +1,3 @@
-.DS_Store
-*.pyc
-build
-dist
-.DS_Store
-*.local.py
-local_settings.py
-.project
-.pydevproject
-.settings
-.coverage
-MANIFEST
-.idea
-.vagrant
-celerybeat*
-*.sw[op]
-collected-static/
-nohup.out
-project/settings/hosts/localhost.py
-*.css
-project/static/img/sprites/icons-*.png
-project/static/img/sprites/ui-*.png
-
 # Numerous always-ignore extensions
 *.diff
 *.err
@@ -63,10 +40,6 @@ intermediate
 publish
 .idea
 
-# build script local files
-build/buildinfo.properties
-build/config/buildinfo.properties
-
 # Python
 *.py[co]
 env
@@ -106,15 +79,24 @@ local_settings.py
 # NPM
 node_modules
 
-# RED Boilerplate
-.rbp-temp
-
 *.db
 collected-static/*
 uploads/*
 !collected-static/.gitkeep
 !uploads/README
 
-routing.js
-project/static/css/*.css
-project/static/img/sprites/icons-*.png
+*.local.py
+MANIFEST
+.vagrant
+celerybeat.pid
+*.sw[op]
+nohup.out
+project/settings/hosts/localhost.py
+
+# Keep credentials out of the repo
+settings.json
+.env
+.env.*
+!.env.*.*
+.docker/node_modules.tar.gz
+.docker/.npm_revision

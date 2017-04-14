@@ -1,15 +1,37 @@
-version: '2'
-
+version: '2.1'
+volumes:
+  yarn:
+    external: true
+  npmCache:
+    external: true
+  nodeModules:
+    external: false
 services:
-    web:
-        extends:
-            file: docker-compose.common.yml
-            service: web
-        volumes:
-            - .:/usr/src/app
-        depends_on:
-            - db
-    db:
-        extends:
-            file: docker-compose.common.yml
-            service: db
+  web:
+    extends:
+      file: docker-compose.common.yml
+      service: web
+    build:
+      dockerfile: Dockerfile-dev
+      args:
+        PACKAGE_INSTALLER: yarn
+    network_mode: "bridge"
+    command: 'python manage.py runserver'
+    #command: 'bash'
+    volumes:
+      - .:/app/user
+      - nodeModules:/app/user/node_modules
+      - npmCache:/root/.npm
+      - yarn:/root/.yarn-cache
+    environment:
+      NODE_ENV: 'development'
+    env_file:
+      - ./.docker/common.env
+      - ./.env
+    ports:
+      - '3000:3000'
+      - '3001:3001'
+      - '3002:3002'
+    tty: true
+    stdin_open: true
+    read_only: false

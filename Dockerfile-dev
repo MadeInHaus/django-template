@@ -3,7 +3,6 @@ FROM node:6.7.0-wheezy
 ARG NPM_REGISTRY=http://registry.npmjs.org/
 ARG PACKAGE_INSTALLER=npm
 
-
 # Set our env vars
 ENV PYTHONUNBUFFERED 1
 ENV PATH=/app/user/node_modules/.bin:$PATH
@@ -28,8 +27,6 @@ RUN mkdir -p /app/user && \
 
 WORKDIR /app/user
 COPY package.json yarn.lock requirements.txt /app/user/
-RUN $PACKAGE_INSTALLER install && \
-    $PACKAGE_INSTALLER cache clean
+#RUN echo "${PACKAGE_INSTALLER} install && gulp" >> /root/.bashrc
+RUN echo "${PACKAGE_INSTALLER} install"
 RUN pip install -r requirements.txt
-COPY . /app/user
-# RUN gulp production

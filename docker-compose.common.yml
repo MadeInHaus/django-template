@@ -1,9 +1,12 @@
-version: '2'
+version: '2.1'
 services:
-    db:
-        image: postgres
-    web:
-        build: .
-        command: python ./manage.py runserver 0.0.0.0:8000
-        ports:
-            - "8000:8000"
+  web:
+    image: "377941069960.dkr.ecr.us-east-1.amazonaws.com/react-flux-gulp-starter/web:${ENV:-local}"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    network_mode: "bridge"
+    command: 'python manage.py runserver'
+    working_dir: /app/user
+    environment:
+      PORT: 3000
