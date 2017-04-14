@@ -34,6 +34,10 @@ trap ctrl_c SIGINT SIGTERM INT TERM ERR
 docker-compose -p "$dockerName" -f docker-compose.dev.yml up -d
 getWebContainer
 echo "container is $WEB_CONTAINER"
+
+# echo "run migrate on CMS"
+./docker-manage.sh migrate --run-syncdb --no-input
+
 docker attach --detach-keys='ctrl-d' $WEB_CONTAINER
 
 ctrl_c
