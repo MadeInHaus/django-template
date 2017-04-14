@@ -7,6 +7,10 @@ volumes:
   nodeModules:
     external: false
 services:
+  db:
+    extends:
+      file: docker-compose.common.yml
+      service: db
   web:
     extends:
       file: docker-compose.common.yml
@@ -16,7 +20,7 @@ services:
       args:
         PACKAGE_INSTALLER: yarn
     network_mode: "bridge"
-    command: 'python manage.py runserver'
+    command: ./wait-for-it.sh db:5432 -- python ./manage.py runserver 0.0.0.0:8000
     #command: 'bash'
     volumes:
       - .:/app/user
@@ -28,10 +32,10 @@ services:
     env_file:
       - ./.docker/common.env
       - ./.env
+    links:
+      - db
     ports:
-      - '3000:3000'
-      - '3001:3001'
-      - '3002:3002'
+      - '8000:8000'
     tty: true
     stdin_open: true
     read_only: false

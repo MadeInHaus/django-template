@@ -1,5 +1,9 @@
 version: '2.1'
 services:
+  db:
+    extends:
+      file: docker-compose.common.yml
+      service: db
   web:
     extends:
       file: docker-compose.common.yml
@@ -8,9 +12,11 @@ services:
       args:
         NPM_REGISTRY: http://sinopia.view.build
         PACKAGE_INSTALLER: yarn
-    command: 'bash -c ''npm start'''
+    command: gunicorn backend.wsgi:application -b 0.0.0.0:9898 -k gevent -w 3
+    links:
+      - db
     ports:
-      - 3000
+      - 8000
     environment:
       NODE_ENV: 'production'
       VIRTUAL_HOST: ${VIRTUAL_HOST}
