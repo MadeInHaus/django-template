@@ -1,5 +1,5 @@
 #!/usr/bin/env groovy
 simpleDocker {
-    name = 'react-flux-gulp-starter'
+    name = 'django-template'
     slack_channel = 'dev-internal'
 }
