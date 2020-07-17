@@ -59,6 +59,6 @@
     "babel-register": "6.18.0",
     "debug": "2.6.0",
     "dotenv": "2.0.0",
-    "lodash": "4.17.13"
+    "lodash": "4.17.19"
   }
 }
