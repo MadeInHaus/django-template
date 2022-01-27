@@ -5,7 +5,7 @@ astroid==1.2.0
 backports.shutil-get-terminal-size==1.0.0
 billiard==3.3.0.23
 boto==2.40.0
-celery==3.1.23
+celery==5.2.2
 cffi==1.6.0
 coverage==3.7.1
 cryptography==3.2
