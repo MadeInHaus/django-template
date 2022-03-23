@@ -41,7 +41,7 @@
     "imagemin-jpegtran": "^5.0.0",
     "imagemin-optipng": "^5.1.0",
     "imagemin-svgo": "^5.1.0",
-    "minimist": "1.2.3",
+    "minimist": "1.2.6",
     "pretty-hrtime": "1.0.3",
     "q": "1.4.1",
     "require-dir": "0.3.1",
